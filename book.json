@@ -51,7 +51,7 @@
     "github-buttons": {
       "buttons": [{
         "user": "WuKongNotNull",
-        "repo": "https://github.com/WuKongNotNull/spring-boot-quickstart-wukongnote",
+        "repo": "spring-boot-quickstart-wukongnote",
         "type": "star",
         "size": "small"
       }]
@@ -81,10 +81,7 @@
       ]
     },
     "edit-link-plus": {
-      "base": {
-        "wukongnotnull.github.io":"https://github.com/WuKongNotNull/spring-boot-quickstart-wukongnote/tree/main"
-      },
-      "defaultBase": "https://github.com/WuKongNotNull/spring-boot-quickstart-wukongnote",
+      "base":  "https://github.com/WuKongNotNull/spring-boot-quickstart-wukongnote",
       "label": "编辑本页"
     },
     "chart": {
@@ -131,7 +128,7 @@
       "number": "苏ICP备123234223号"
     },
     "hide-element": {
-      "elements": ["a.gitbook-link[href='https://www.gitbook.com']",".gitbook-link"]
+      "elements": ["a.gitbook-link[href='https://www.gitbook.com']",".copyright"]
     },
     "simple-mind-map":{
       "preset": "colorful"
