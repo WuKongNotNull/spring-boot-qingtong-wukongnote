@@ -51,7 +51,7 @@
     "github-buttons": {
       "buttons": [{
         "user": "WuKongNotNull",
-        "repo": "https://www.wukongnotnull.com/awesome-free-vpn/",
+        "repo": "https://github.com/WuKongNotNull/spring-boot-quickstart-wukongnote",
         "type": "star",
         "size": "small"
       }]
@@ -82,24 +82,22 @@
     },
     "edit-link-plus": {
       "base": {
-        "snowdreams1006.github.io":"https://github.com/snowdreams1006/snowdreams1006.github.io/edit/master",
-        "snowdreams1006.gitlab.io":"https://gitlab.com/snowdreams1006/snowdreams1006.gitlab.io/edit/master",
-        "snowdreams1006.gitee.io":"https://gitee.com/snowdreams1006/snowdreams1006/edit/master"
+        "wukongnotnull.github.io":"https://github.com/WuKongNotNull/spring-boot-quickstart-wukongnote/tree/main"
       },
-      "defaultBase": "https://github.com/snowdreams1006/snowdreams1006.github.io/edit/master",
+      "defaultBase": "https://github.com/WuKongNotNull/spring-boot-quickstart-wukongnote",
       "label": "编辑本页"
     },
     "chart": {
       "type": "c3"
     },
     "rss": {
-      "title": "雪之梦技术驿站",
-      "description": "雪之梦技术驿站静态网站,源码托管于 https://github.com/snowdreams1006/snowdreams1006.github.io",
-      "author": "snowdreams1006",
-      "site_url": "https://snowdreams1006.github.io/",
-      "feed_url": "https://snowdreams1006.github.io/rss",
-      "managingEditor": "snowdreams1006@163.com",
-      "webMaster": "snowdreams1006@163.com",
+      "title": "悟空非空也 - springboot 快速入门",
+      "description": "帮助springboot 初学者快速入门的详细的悟空笔记，笔记结构：理论讲解+小案例+小项目，通俗易懂。个人博客：www.wukongnotnull.com",
+      "author": "wukongnotnull",
+      "site_url": "https://wukongnotnull.github.io/spring-boot-quickstart-wukongnote/",
+      "feed_url": "https://wukongnotnull.github.io/spring-boot-quickstart-wukongnote/rss",
+      "managingEditor": "1390128154@qq.com",
+      "webMaster": "1390128154@qq.com",
       "categories": [
         "markdown",
         "git",
@@ -110,14 +108,14 @@
       ]
     },
     "copyright": {
-      "site": "https://snowdreams1006.github.io/",
+      "site": "https://wukongnotnull.github.io/spring-boot-quickstart-wukongnote/",
       "author": "悟空非空也",
       "website": "悟空非空也",
-      "image": "https://snowdreams1006.github.io/snowdreams1006-wechat-open.png",
+      "image": "https://wukongnotnull.github.io/spring-boot-quickstart-wukongnote/snowdreams1006-wechat-open.png",
       "copyProtect": false
     },
     "tbfed-pagefooter": {
-      "copyright": "&copy snowdreams1006",
+      "copyright": "&copy 悟空非空也",
       "modify_label": "文件修订时间: ",
       "modify_format": "YYYY-MM-DD HH:mm:ss"
     },
@@ -130,10 +128,10 @@
       "wechatText": "微信"
     },
     "icp": {
-      "number": "浙ICP备18042346号"
+      "number": "苏ICP备123234223号"
     },
     "hide-element": {
-      "elements": ["a.gitbook-link[href='https://www.gitbook.com']"]
+      "elements": ["a.gitbook-link[href='https://www.gitbook.com']",".gitbook-link"]
     },
     "simple-mind-map":{
       "preset": "colorful"
