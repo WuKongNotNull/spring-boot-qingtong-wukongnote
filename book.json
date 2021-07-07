@@ -117,8 +117,8 @@
       "modify_format": "YYYY-MM-DD HH:mm:ss"
     },
     "donate": {
-      "wechat": "/asset/pay/wechat-pay.png",
-      "alipay": "/asset/pay/ali-pay.png",
+      "wechat": "asset/pay/wechat-pay.png",
+      "alipay": "asset/pay/ali-pay.png",
       "title": "",
       "button": "赞 👍 赏",
       "alipayText": "支付宝",
