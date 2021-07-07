@@ -6,7 +6,7 @@
   "gitbook": "3.2.3",
   "links": {
     "sidebar": {
-      "科学上网": "https://www.wukongnotnull.com/awesome-free-vpn/",
+      "科学上网": "https://github.com/WuKongNotNull/awesome-free-vpn",
       "JetBrains 全家桶": "https://www.bilibili.com/read/cv11463068"
     }
   },
@@ -41,7 +41,7 @@
   ],
   "pluginsConfig": {
     "favicon-absolute": {
-      "favicon": "/favicon.ico",
+      "favicon": "/asset/wukong-favicon.ico",
       "appleTouchIconPrecomposed152": "/apple-touch-icon-precomposed-152.png"
     },
     "toc": {
@@ -81,7 +81,7 @@
       ]
     },
     "edit-link-plus": {
-      "base":  "https://github.com/WuKongNotNull/spring-boot-quickstart-wukongnote",
+      "base":  "https://github.com/WuKongNotNull/spring-boot-quickstart-wukongnote/blob/main/",
       "label": "编辑本页"
     },
     "chart": {
@@ -108,8 +108,8 @@
       "site": "https://wukongnotnull.github.io/spring-boot-quickstart-wukongnote/",
       "author": "悟空非空也",
       "website": "悟空非空也",
-      "image": "https://wukongnotnull.github.io/spring-boot-quickstart-wukongnote/snowdreams1006-wechat-open.png",
-      "copyProtect": false
+      "image": "/asset/weixin/weixin-QR-code.png",
+      "copyProtect": true
     },
     "tbfed-pagefooter": {
       "copyright": "&copy 悟空非空也",
@@ -117,10 +117,10 @@
       "modify_format": "YYYY-MM-DD HH:mm:ss"
     },
     "donate": {
-      "wechat": "/wechat.jpg",
-      "alipay": "/alipay.jpg",
+      "wechat": "/asset/pay/wechat-pay.png",
+      "alipay": "/asset/pay/ali-pay.png",
       "title": "",
-      "button": "赏",
+      "button": "赞 👍 赏",
       "alipayText": "支付宝",
       "wechatText": "微信"
     },

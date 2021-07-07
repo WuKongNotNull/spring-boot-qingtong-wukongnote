@@ -1,6 +1,8 @@
 # Introduction
 
-测试内容
+<p>大家好，</p>
+<p>该文档定位`Spring Boot`初学者，</p>
+<p>主要帮助大家快速入门，故称为「青铜篇」。</p>
 
 # 一级标题
 
@@ -26,9 +28,5 @@
 ###### 六级标题
 测试内容
 
- 仓库地址
-https://github.com/WuKongNotNull/spring-boot-quickstart-wukongnote
 
-pages 地址
-https://wukongnotnull.github.io/spring-boot-quickstart-wukongnote/
 
