@@ -30,7 +30,6 @@
     "copyright",
     "tbfed-pagefooter",
     "donate",
-    "icp",
     "diff",
     "simple-mind-map",
     "hide-element",
@@ -41,7 +40,7 @@
   ],
   "pluginsConfig": {
     "favicon-absolute": {
-      "favicon": "/asset/wukong-favicon.ico",
+      "favicon": "asset/wukong-favicon.ico",
       "appleTouchIconPrecomposed152": "/apple-touch-icon-precomposed-152.png"
     },
     "toc": {
@@ -108,8 +107,8 @@
       "site": "https://wukongnotnull.github.io/spring-boot-quickstart-wukongnote/",
       "author": "悟空非空也",
       "website": "悟空非空也",
-      "image": "/asset/weixin/weixin-QR-code.png",
-      "copyProtect": true
+      "image": "asset/weixin/weixin-QR-code.png",
+      "copyProtect": false
     },
     "tbfed-pagefooter": {
       "copyright": "&copy 悟空非空也",
@@ -123,9 +122,6 @@
       "button": "赞 👍 赏",
       "alipayText": "支付宝",
       "wechatText": "微信"
-    },
-    "icp": {
-      "number": "苏ICP备123234223号"
     },
     "hide-element": {
       "elements": ["a.gitbook-link[href='https://www.gitbook.com']",".copyright"]
