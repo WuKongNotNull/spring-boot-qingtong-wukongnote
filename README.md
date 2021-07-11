@@ -1,33 +1,19 @@
-# Introduction
+# 自我介绍
 
-<p>大家好，</p>
-<p>该文档定位`Spring Boot`初学者，</p>
-<p>主要帮助大家快速入门，故称为「青铜篇」。</p>
-
-# 一级标题
-
-测试内容
-
-# 一级标题
-测试内容
-
-## 二级标题
-测试内容
-
-### 三级标题
-测试内容
-
-#### 四级标题
-测试内容
+<p align='center'>金丝猴们，</p>
+<p align='center'>该文档定位<i>Spring Boot</i>初学者，</p>
+<p align='center'>主要帮助大家快速入门，故称为「青铜篇」。</p>
 
 
-##### 五级标题
-测试内容
+# 开发环境
 
-
-###### 六级标题
-测试内容
+- jdk 8.0
+- Spring Boot 2.x
+- Maven 3.x
+- JetBrain Idea 旗舰版
 
 
 
-![GitHub](https://img.shields.io/github/license/wukongnotnull/spring-boot-quickstart-wukongnote?color=blue&label=black&logo=github&logoColor=red&style=plastic)
+# 贡献
+- 金丝猴们，点击「编辑本页」可以参与文档修改
+- 欢迎大家指点修正

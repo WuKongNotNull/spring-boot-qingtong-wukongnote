@@ -1,8 +1,7 @@
 #  Summary
 
-- [首页](README.md)
+- [首页 - Spring Boot 青铜篇](README.md)
 
-  
 
 -  [开发入门](introduction/introduction.md) 
   - [maven 构建项目](introduction/maven-build.md) 
