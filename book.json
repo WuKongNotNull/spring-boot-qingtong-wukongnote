@@ -107,7 +107,7 @@
       "site": "https://wukongnotnull.github.io/spring-boot-quickstart-wukongnote/",
       "author": "悟空非空也",
       "website": "悟空非空也",
-      "image": "asset/weixin/weixin-QR-code.png",
+      "image": "/asset/weixin/weixin-QR-code.png",
       "copyProtect": false
     },
     "tbfed-pagefooter": {
@@ -116,8 +116,8 @@
       "modify_format": "YYYY-MM-DD HH:mm:ss"
     },
     "donate": {
-      "wechat": "asset/pay/wechat-pay.png",
-      "alipay": "asset/pay/ali-pay.png",
+      "wechat": "/asset/pay/wechat-pay.png",
+      "alipay": "/asset/pay/ali-pay.png",
       "title": "",
       "button": "赞 👍 赏",
       "alipayText": "支付宝",
