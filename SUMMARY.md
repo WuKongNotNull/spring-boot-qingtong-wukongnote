@@ -18,9 +18,9 @@
 
   -  [application 配置文件](config-annotation/application-config.md) 
   -  [属性注入](config-annotation/inject-property.md) 
-  -  [自定义配置](config-annotation/custom-config.md) 
+  -  [自定义配置文件](config-annotation/custom-config.md) 
   -  [profile 文件配置](config-annotation/profile-config.md) 
-  -  [随机值设置及参数引用](config-annotation/property-reference.md) 
+  -  [yml 高级玩法](config-annotation/property-reference.md) 
 
   
 

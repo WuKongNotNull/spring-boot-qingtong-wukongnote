@@ -3,30 +3,35 @@
 application.properties
 
 ```properties
-#参数间的引用
-app.name=shopping
-app.description=${app.name} is a buying spring boot application
 
-jack.age=${random.int[10,20]}
-jack.description=jack 的年龄 可能是 ${jack.age} 
+# 参数间的引用
+app.name=wukongnotnull
+app.description=${app.name} is a technology blog website, welcome your comming.
+
+wukong.age=${random.int[10,20]}
+wukong.description=悟空非空也的年龄可能是 ${wukong.age} 
+
 ```
 
-
+<br>
 
 test
 
 ```java
 @SpringBootTest
-class MySpringboot2ApplicationTests {
+class MySpringbootApplicationTests {
 
-    @Value("${jack.description}")
-    private String str;
+    @Value("${wukong.description}")
+    private String authorDes;
 
     @Test
     void contextLoads() {
-        System.out.println(str);
+        System.out.println(authorDes);
     }
 }
 ```
 
 
+<br>
+<br>
+<br>
