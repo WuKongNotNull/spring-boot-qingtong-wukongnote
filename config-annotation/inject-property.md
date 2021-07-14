@@ -1,69 +1,108 @@
-## 使用注解@ConfigurationProperties和@Value注入属性
+# @ConfigurationProperties注入属性
 
 
 
-第一种方法properties
+第1种方法 properties
 
-```
-#给属性赋值
-person.id=2
-person.name=xiaowang
-person.hobby=eat,drink,play
-person.family=father,mother
-person.map.k1=v1
-person.map.k2=v2
-person.peter.peterName=wangcai
-person.peter.peterAge=10
-
+```properties
+#给类属性赋值
+person.id=1
+person.name=wukongnotnull
+person.family=baba,mama,gege,jiejie
+person.hobbies=dance,game,110
+person.map.level=3
+person.map.salary=3000
+person.pet.petName=wangcai
+person.pet.petAge=3
 ```
 
 
 
 第二种方式yml
 
-```
-#给属性赋值
+```yaml
+#给类属性赋值
 person:
-  id: 1
-  name: zhangsan
-  hobby: [eat,drink,play]
-  family:
-    [baba,mama,gege,jiejie]
-  map:
-    {k1: v1,k2: v2}
-  peter:
-    {peterName: dog,peterAge: 2}
+  id: 2
+  name: wukongnotnull
+  family: [baba,mama,gege,jiejie]
+  hobbies: [dance,game,sing]
+  map: {level: 3,salary: 3000}
+  pet: {petName: wangcai, petAge: 3}
 
 ```
 
 
 
-编写实体类,使用@Component,@ConfigurationProperties注解
+编写实体类
 
 ```java
-package com.wukongnotnull.myspringboot.domain;
+package com.wukongnotnull.domain;
+  /* 
+  author: 悟空非空也（B站/知乎/公众号） 
+  */
+
+public class Pet {
+
+    private String  petName;
+    private  int  petAge;
+
+    public String getPetName() {
+        return petName;
+    }
+
+    public void setPetName(String petName) {
+        this.petName = petName;
+    }
+
+    public int getPetAge() {
+        return petAge;
+    }
+
+    public void setPetAge(int petAge) {
+        this.petAge = petAge;
+    }
+
+    @Override
+    public String toString() {
+        return "Pet{" +
+                "petName='" + petName + '\'' +
+                ", petAge=" + petAge +
+                '}';
+    }
+}
+
+
+```
+
+
+
+使用@Component,@ConfigurationProperties注解
+
+```java
+package com.wukongnotnull.domain;
+  /* 
+  author: 悟空非空也（B站/知乎/公众号） 
+  */
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @Author: 悟空非空也（公众号/B站/知乎）
- */
-@Component//生成当前类的实例对象，存到ioc容器中
-@ConfigurationProperties(prefix = "person")//将配置文件中前缀为person的属性值映射到当前类的变量上
+@Component
+@ConfigurationProperties(prefix = "person")
 public class Person {
 
     private  int id;
     private  String name;
-    private List hobby;
     private String[] family;
+    private List hobbies;
     private Map map;
-    private Peter peter;
+    private Pet pet;
+
 
     public int getId() {
         return id;
@@ -81,12 +120,12 @@ public class Person {
         this.name = name;
     }
 
-    public List getHobby() {
-        return hobby;
+    public List getHobbies() {
+        return hobbies;
     }
 
-    public void setHobby(List hobby) {
-        this.hobby = hobby;
+    public void setHobbies(List hobbies) {
+        this.hobbies = hobbies;
     }
 
     public String[] getFamily() {
@@ -105,12 +144,12 @@ public class Person {
         this.map = map;
     }
 
-    public Peter getPeter() {
-        return peter;
+    public Pet getPet() {
+        return pet;
     }
 
-    public void setPeter(Peter peter) {
-        this.peter = peter;
+    public void setPet(Pet pet) {
+        this.pet = pet;
     }
 
     @Override
@@ -118,48 +157,10 @@ public class Person {
         return "Person{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", hobby=" + hobby +
                 ", family=" + Arrays.toString(family) +
+                ", hobbies=" + hobbies +
                 ", map=" + map +
-                ", peter=" + peter +
-                '}';
-    }
-}
-
-```
-
-```java
-package com.wukongnotnullg.myspringboot.domain;
-
-/**
- * @Author: 悟空非空也（公众号/B站/知乎）
- */
-public class Peter {
-
-    private String peterName;
-    private int peterAge;
-
-    public String getPeterName() {
-        return peterName;
-    }
-
-    public void setPeterName(String peterName) {
-        this.peterName = peterName;
-    }
-
-    public int getPeterAge() {
-        return peterAge;
-    }
-
-    public void setPeterAge(int peterAge) {
-        this.peterAge = peterAge;
-    }
-
-    @Override
-    public String toString() {
-        return "Peter{" +
-                "peterName='" + peterName + '\'' +
-                ", peterAge=" + peterAge +
+                ", pet=" + pet +
                 '}';
     }
 }
@@ -177,32 +178,20 @@ class MySpringbootApplicationTests {
     @Autowired
     private  Person person;
 
-    @Autowired
-    private HelloController helloController;
-
-    @Value(value = "${person.name}") //直接注入，不需要setter方法
-    private String str;
-
-    @Test
-    public void contextLoads() {
-        String hello = helloController.hello();
-        System.out.println(hello);
-
-    }
 
     @Test
     public void personTest(){
-
         System.out.println(person);
     }
-
-    @Test
-    public void strTest(){
-        System.out.println("打印出str===》"+str);
-    }
-    
+ 
 }
 ```
+
+
+
+
+
+# @Value注入属性
 
 
 
@@ -210,7 +199,7 @@ class MySpringbootApplicationTests {
 
 ```prope
 #给基本数据数据类型注入
-str=jibenshujuleixing
+flag=wukongnotnull
 ```
 
 
@@ -221,13 +210,27 @@ str=jibenshujuleixing
 @SpringBootTest
 class MySpringbootApplicationTests {
 
-    @Value(value = "${str}") //直接注入，不需要setter方法
-    private String str;
+  
+    @Value(value = "${flag}") //直接注入，不需要setter方法
+    private String flag;
 
     @Test
-    public void strTest(){
-        System.out.println("打印出str===》"+str);
+    public void showTest(){
+        System.out.println("姓名为--->"+ flag);
     }
+  
+  
+     @Value(value = "${person.family[0]}")
+    private int familyName;
+
+
+    @Test
+    void valueTest(){
+        System.out.println("family--->" + familyName);
+
+    }
+
+  
 
 }
 ```
@@ -236,14 +239,37 @@ class MySpringbootApplicationTests {
 
 ### @ConfigurationProperties注解支持JSR303数据校验
 
+```
+person:
+  id: 2
+  name: wukongnotnull
+  family: [baba,mama,gege,jiejie]
+  hobbies: [dance,game,110]
+  map: {level: 3,salary: 3000}
+  pet: {petName: wangcai, petAge: 3}
+```
+
 
 
 application.properties
 
 ```properties
 #@ConfigurationProperties注解支持JSR303数据校验
-user.email=139aaaa
+user.email=1390128154@qq.com
 ```
+
+
+
+pom
+
+```pom
+       <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+```
+
+
 
 
 
@@ -278,15 +304,6 @@ public class User {
 
 
 
-pom
-
-```pom
-       <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
-```
-
 
 
 test
@@ -300,7 +317,7 @@ test
 
 
 
-## 两种注解对比分析
+# 两种注解对比分析
 
 ![1593089590122](../img/1593089590122.png)
 
