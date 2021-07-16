@@ -1,4 +1,4 @@
-## Redis介绍
+# Redis介绍
 
 **什么是Redis**
 
@@ -14,27 +14,31 @@ Redis 是一个开源（BSD许可）的、内存中的数据结构存储系统�
 
 4.提供多种功能：Redis提供了多种功能特性，可用作非关系型数据库、缓存中间件、消息中间件等。
 
+<br>
 
+# Redis下载与安装
 
-**redis下载与安装**
-
-下载路径
+**下载路径**
 
 https://github.com/microsoftarchive/redis/releases/tag/win-3.2.100
 
-<img src="../../../springboot/springboot笔记.assets/image-20200629130139745.png" alt="image-20200629130139745" style="zoom:50%;" />
+![image-20200629130139745](../img/image-20200629130139745.png)
 
-解压后放入磁盘某位置就安装成功（免安装）
+<br>
 
-安装可视化客户端
+**解压后放入磁盘某位置就安装成功（免安装）**
+
+<br>
+
+**安装可视化客户端**
 
 ![image-20200629155409332](../img/image-20200629155409332-5921678.png)
 
 
 
+<br>
 
-
-## 使用Spring Boot整合Redis
+# 使用Spring Boot整合Redis
 
 1.在pom文件中添加Spring Data Redis依赖启动器
 
@@ -46,119 +50,179 @@ https://github.com/microsoftarchive/redis/releases/tag/win-3.2.100
 
 ```
 
-
+<br>
 
 2.在全局配置文件application.properties中添加Redis数据库连接配置
 
 ```properties
-spring.redis.host=127.0.0.1
-spring.redis.port=6379
-spring.redis.password=
+spring:
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
 
 ```
 
-
+<br>
 
 3.编写实体类
 
 ```java
-@RedisHash("persons")  
+package com.wukongnotnull.domain;/* 
+author: 悟空非空也（B站/知乎/公众号） 
+*/
+
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.index.Indexed;
+
+import java.util.List;
+
+@Data
+@RedisHash(value = "people")
 public class Person {
-    @Id        
-         private String id; //主键是string类型
-    @Indexed  
-         private String firstname;
+
+    @Id
+    private  String id;
     @Indexed
-         private String lastname;
-         private Address address;
-         private List<Family> familyList;//家人
+    private  String firstName;
+    @Indexed
+    private  String lastName;
+    private  Address address;
+    private List<Family> familyList;
 }
 
 ```
 
 ```java
+package com.wukongnotnull.domain;/* 
+author: 悟空非空也（B站/知乎/公众号） 
+*/
+
+import lombok.Data;
+import org.springframework.data.redis.core.index.Indexed;
+
+@Data
 public class Address {
-	@Indexed
-	private String city;
-	@Indexed
-	private String country;
+
+    @Indexed
+    private  String nation;
+    @Indexed
+    private  String village;
+
+}
+```
+
+```java
+package com.wukongnotnull.domain;/* 
+author: 悟空非空也（B站/知乎/公众号） 
+*/
+
+import lombok.Data;
+import org.springframework.data.redis.core.index.Indexed;
+
+@Data
+public class Family {
+
+    @Indexed
+    private String   type;
+
+    @Indexed
+    private String   name;
+
+
 }
 
 ```
 
-```java
-public class Family {
-	@Indexed
-	private String type;
-	@Indexed
-	private String username;}
-
-```
-
-
+<br>
 
 4.编写Repository接口
 
 ```java
-public interface PersonRepository extends CrudRepository<Person, String> {//（实体类，主键类型）
-List<Person> findByLastname(String lastname);
-Page<Person> findPersonByLastname(String lastname, Pageable page);
-List<Person> findByFirstnameAndLastname(String firstname, String lastname);
-List<Person> findByAddress_City(String city);
-List<Person> findByFamilyList_Username(String username);
+package com.wukongnotnull.repository;/* 
+author: 悟空非空也（B站/知乎/公众号） 
+*/
+
+import com.wukongnotnull.domain.Person;
+import org.springframework.data.repository.CrudRepository;
+
+public interface PersonRepository extends CrudRepository<Person,String> {
+
+    Person findPersonByFirstName(String firstName);
+
+    @Override
+    <S extends Person> S save(S entity);
+
+}
+
+```
+
+<br>
+
+5.编写单元测试进行接口方法测试以及整合测试
+
+```java
+ package com.wukongnotnull.repository;
+
+import com.wukongnotnull.domain.Address;
+import com.wukongnotnull.domain.Family;
+import com.wukongnotnull.domain.Person;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/*
+author: 悟空非空也（B站/知乎/公众号） 
+*/
+@SpringBootTest
+class PersonRepositoryTest {
+
+    @Autowired
+    private  PersonRepository personRepository;
+
+    @Test
+    void findPersonByFirstName() {
+        System.out.println(personRepository.findPersonByFirstName("空"));
+    }
+
+    @Test
+    void save() {
+        Person person = new Person();
+        person.setId("002");
+        person.setLastName("悟");
+        person.setFirstName("空");
+
+        Address address = new Address();
+        address.setNation("中国");
+        address.setVillage("南京");
+        person.setAddress(address);
+
+        List<Family> familyList = new ArrayList<>();
+        Family father = new Family();
+        father.setType("father");
+        father.setName("杨康");
+        Family mother = new Family();
+        mother.setType("mother");
+        mother.setName("穆念慈");
+        familyList.add(father);
+        familyList.add(mother);
+        person.setFamilyList(familyList);
+
+        System.out.println(personRepository.save(person));
+    }
 }
 
 ```
 
 
 
+<br>
 
+<br>
 
-5.编写单元测试进行接口方法测试以及整合测试
-
-```java
-   @Autowired
-    public PersonRepository personRepository;
-
-    @Test
-    public void selectPerson() {
-      List<Person> list = repository.findByAddress_City("北京");
-      System.out.println(list);
-    
-  
-    @Test
-     void addTest(){
-            Person person=new Person();
-            person.setId("p001");
-        Address address = new Address();
-        address.setCity("江苏省");
-        address.setCountry("南京市");
-        person.setAddress(address);
-
-        List<Family> familyList=new ArrayList<>();
-        Family family=new Family();
-        family.setType("father");
-        family.setUsername("杨康");
-
-        Family family2=new Family();
-        family2.setType("mother");
-        family2.setUsername("穆念慈");
-
-        familyList.add(family);
-        familyList.add(family2);
-
-        person.setFamilyList(familyList);
-        person.setLastName("杨");
-        person.setFirstName("过");
-
-        Person person1 = personRepository.save(person);
-        System.out.println("person1=====>"+person1);
-    }
-    
-    
-    
-    
-    }
-
-```
-
+<br>

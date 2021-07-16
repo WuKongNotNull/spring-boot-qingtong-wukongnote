@@ -52,98 +52,55 @@ INSERT INTO `b_comment` VALUES ('5', '赞5', 'baigujing', '2');
 > 推荐实体类使用  lombok  插件，编译后自动生成 setter | getter 方法。
 
 ```java
-package com.wukongnotnul.domain;
+package com.wukongnotnull.domain;
+/* 
+author: 悟空非空也（B站/知乎/公众号） 
+*/
 
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Article {
 
     private Integer id;
     private String title;
     private String content;
 
-    //额外增加一个字段 评论集合
-    private List<Comment> commentList;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public List<Comment> getCommentList() {
-        return commentList;
-    }
-
-    public void setCommentList(List<Comment> commentList) {
-        this.commentList = commentList;
-    }
 }
+
 
 ```
 
 ```java
 package com.wukongnotnull.domain;
+  /* 
+  author: 悟空非空也（B站/知乎/公众号） 
+  */
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Comment {
 
     private Integer id;
     private String content;
     private String author;
     //此属性名和表中的字段article_id不一致，不能自动映射，需要在application.yml中进行配置
-  	//mybatis.configuration.map-underscore-to-camel-case=true
+    //mybatis.configuration.map-underscore-to-camel-case=true
     private Integer articleId;
 
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public Integer getArticleId() {
-        return articleId;
-    }
-
-    public void setArticleId(Integer articleId) {
-        this.articleId = articleId;
-    }
 }
 
 ```
@@ -155,15 +112,19 @@ public class Comment {
 application.properties
 
 ```xml
-spring.datasource.driver-class-name=com.mysql.jdbc.Driver
-spring.datasource.url=jdbc:mysql://localhost:3306/wukong_blog?serverTimezone=UTC
-spring.datasource.username=root
-spring.datasource.password=root
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/wukong_blog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&autoReconnect=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: rootroot
 ```
 
 <br>
 
-**使用第三方数据源进行配置（ali的druid数据源为例）**
+**使用第三方数据源进行配置（推荐：ali的druid数据源为例）**
+
+pom.xml
 
 ```xml
 <dependency>
@@ -178,13 +139,20 @@ spring.datasource.password=root
 
 **在全局配置文件中设置druid的属性**
 
-```xml
-spring.datasource.type = com.alibaba.druid.pool.DruidDataSource
-spring.datasource.initialSize=20
-spring.datasource.minIdle=10
-spring.datasource.maxActive=100
+<br>
 
+application.yml
+
+```yaml
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 30
+    minIdle: 20
+    maxActive: 200
 ```
+
+
 
 
 

@@ -1,103 +1,90 @@
-## 使用注解的方式整合MyBatis
+# 使用注解的方式整合MyBatis
 
 
 
-mapper接口
+**mapper接口**
 
 ```java
 package com.wukongnotnull.mapper;
-
+    /* 
+    author: 悟空非空也（B站/知乎/公众号） 
+    */
 
 import com.wukongnotnull.domain.Comment;
 import org.apache.ibatis.annotations.*;
 
 
-//表示该类是mybatis接口文件，需要被springboot扫描
 @Mapper
 public interface CommentMapper {
 
-   //查询
-   @Select("select * from t_comment where id=#{id}")
-   public Comment getCommentById(@Param("id") Integer id);
+    // 查询
+    @Select("select * from b_comment where id = #{id}")
+    public Comment queryComment(Integer id);
 
-   //增加
-   @Insert("insert into t_comment(content,author,a_id)values(#{content},#{author},#{aId})")
-    public int addComment(Comment comment);
-
-   //修改
-    @Update("update t_comment set content=#{content},author=#{author},a_id=#{aId} where id=#{id}")
-    public int modifyComment(Comment comment);
-
-   //删除
-    @Delete("delete from t_comment where id=#{id}")
+    //删除
+    @Delete("delete from b_comment where id=#{id}")
     public int deleteComment(@Param("id") Integer id);
 
+    // 修改
+    @Update("update b_comment set content = #{content}, author = #{author}  where id = #{id}")
+    public int updateComment(Comment comment);
 
+    // 添加，注意是 #{articleId} ，不是#{article_id}
+    @Insert("insert into b_comment(content,author,article_id) values(#{content},#{author},#{articleId})")
+    public int insertComment(Comment comment);
 
 }
 
 ```
 
+<br>
 
-
-测试
+**测试**
 
 ```java
-package com.siliang;
+package com.wukongnotnull.mapper;
 
-import com.siliang.domain.Comment;
-import com.siliang.mapper.CommentMapper;
+import com.wukongnotnull.domain.Comment;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.annotation.Resource;
-
-
+    /*
+    author: 悟空非空也（B站/知乎/公众号） 
+    */
 @SpringBootTest
-class MyspringbootMybatisApplicationTests {
+class CommentMapperTest {
 
-    //此处使用@Autowired也可以，但是会标红
-    @Resource
+    @Autowired
     private CommentMapper commentMapper;
 
-   private Comment comment=new Comment();
-
-
     @Test
-    void selectTest() {
-
-        Comment comment = commentMapper.getCommentById(1);
-        System.out.println(comment);
-
+    void queryComment() {
+        System.out.println(commentMapper.queryComment(2));
     }
 
     @Test
-     void addTest(){
-
-        comment.setContent("this article is very good");
-        comment.setAuthor("libai");
-        comment.setaId(1);
-        int i = this.commentMapper.addComment(comment);
-        System.out.println("add====>"+i);
-
+    void deleteComment() {
+        System.out.println(commentMapper);
+        System.out.println(commentMapper.deleteComment(5));
     }
 
     @Test
-     void updateTest(){
-        comment.setId(1);
-        comment.setContent("这部书太恐怖");
-        comment.setAuthor("libai2");
-        comment.setaId(1);
-        int i = this.commentMapper.modifyComment(comment);
-        System.out.println("update====>"+i);
+    void updateComment(){
+        Comment comment = new Comment();
+        comment.setId(2);
+        comment.setContent("11111");
+        comment.setAuthor("111");
+        System.out.println(commentMapper.updateComment(comment));
     }
 
     @Test
-    void deleteTest(){
-        int i = this.commentMapper.deleteComment(6);
-        System.out.println("delete===>"+i);
-
+    void insertComment(){
+        Comment comment = new Comment();
+        comment.setContent("add11111");
+        comment.setAuthor("add11111");
+        comment.setArticleId(1);
+        System.out.println(commentMapper.insertComment(comment));
     }
 
 }
@@ -106,41 +93,70 @@ class MyspringbootMybatisApplicationTests {
 
 
 
-## 使用配置文件的方式整合MyBatis
+# 使用配置文件的方式整合MyBatis
+
+<br>
+
+**在全局配置文件配置**
 
 
 
-在全局配置文件配置
+> mapper-locations: classpath:mapper/** 
+>
+> 该位置是在 resources 文件夹下新建 mapper 目录
+
+
 
 ```properties
-#配置mybatis的xml配置文件路径
-mybatis.mapper-locations=classpath:mapper/**
-#配置xml配置文件中实体类的别名
-mybatis.type-aliases-package=com.siliang.domain
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mapper/**
+  type-aliases-package: com.wukongnotnull.domain
 ```
 
+<br>
 
-
-编写ArticleMapper接口
+**编写ArticleMapper接口**
 
 ```java
-package com.siliang.mapper;
+package com.wukongnotnull.mapper;
+   /*
+   author: 悟空非空也（B站/知乎/公众号）
+   */
 
-
-import com.siliang.domain.Article;
+import com.wukongnotnull.domain.Article;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+
+// 不要忘记 @Mapper
 @Mapper
 public interface ArticleMapper {
 
-    //查询
-    public Article getArticleById(Integer id);
+   // 查询单文章
+   Article getArticleById(int id);
+
+   // 查询文章列表
+   List<Article> getArticleList();
+
+   // 修改文章
+   int updateArticle(Article article);
+
+   // 添加文章
+    int addArticle(Article article);
+
+    // 删除文章
+    int delArticle(int id);
+
 }
+
 ```
 
+<br>
 
-
-编写接口对应的xml配置文件
+**编写接口对应的xml配置文件**
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -148,53 +164,93 @@ public interface ArticleMapper {
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.siliang.mapper.ArticleMapper">
-    <resultMap id="collectComment" type="com.siliang.domain.Article">
-        <id column="id" property="id"/>
-        <result column="title" property="title"/>
-        <result column="content" property="content"/>
-        <collection property="commentList" ofType="com.siliang.domain.Comment">
-            <id column="c_id" property="id"/>
-            <result column="c_content" property="content"/>
-            <result column="author" property="author"/>
-            <result column="a_id" property="aId"/>
-        </collection>
+<mapper namespace="com.wukongnotnull.mapper.ArticleMapper">
 
-    </resultMap>
-    <select id="getArticleById" resultMap="collectComment" parameterType="int">
-    SELECT a.*,c.`id` AS c_id,c.`content` as c_content,c.`author`,c.`a_id`
-    FROM t_article a,t_comment c
-    WHERE a.`id`=c.`a_id`
-    AND a.`id`=#{id}
-  </select>
+    <select id="getArticleById" resultType="Article" parameterType="int">
+        select * from b_article where id = #{id}
+    </select>
+
+    <select id="getArticleList" resultType="Article">
+        select  * from b_article
+    </select>
+
+    <update id="updateArticle" parameterType="Article">
+        update b_article set title = #{title}, content = #{content} where id = #{id}
+    </update>
+
+    <insert id="addArticle" parameterType="Article">
+        insert into b_article(title,content) values(#{title},#{content})
+    </insert>
+
+    <delete id="delArticle" parameterType="int" >
+        delete from b_article where id = #{id}
+    </delete>
+
 </mapper>
 ```
 
+<br>
 
-
-测试
+**测试**
 
 ```java
-package com.siliang;
+package com.wukongnotnull.mapper;
 
-import com.siliang.domain.Article;
-import com.siliang.mapper.ArticleMapper;
+import com.wukongnotnull.domain.Article;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.annotation.Resource;
+import static org.junit.jupiter.api.Assertions.*;
 
+  /*
+  author: 悟空非空也（B站/知乎/公众号）
+  */
 @SpringBootTest
-public class ArticleTest {
-    @Resource
-    private ArticleMapper articleMapper;
+class ArticleMapperTest {
+
+    @Autowired
+    private  ArticleMapper articleMapper;
 
     @Test
-    void selectTest(){
-        Article article = articleMapper.getArticleById(1);
-        System.out.println(article);
+    void delArticle(){
+        System.out.println(articleMapper.delArticle(3));
+    }
+
+    @Test
+    void addArticle(){
+        Article article = new Article();
+        article.setTitle("add 1029");
+        article.setContent("add content 1030");
+        System.out.println(articleMapper.addArticle(article));
+    }
+
+    @Test
+    void updateArticle(){
+        Article article = new Article();
+        article.setId(2);
+        article.setTitle("update 1026...");
+        article.setContent("content 1026");
+        System.out.println(articleMapper.updateArticle(article));
+    }
+
+    @Test
+    void getArticleList(){
+        System.out.println(articleMapper.getArticleList());
+    }
+
+    @Test
+    void getArticleById() {
+        System.out.println(articleMapper.getArticleById(1));
     }
 }
 
 ```
 
+
+
+<br>
+
+<br>
+
+<br>
