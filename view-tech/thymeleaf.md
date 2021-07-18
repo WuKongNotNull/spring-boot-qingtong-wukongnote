@@ -1,20 +1,66 @@
-## Thymeleaf常用标签
+# Thymeleaf 介绍
+
+**Thymeleaf 官网**  
+https://www.thymeleaf.org/index.html
+
+![img.png](../img/img.png)
+
+Thymeleaf is a modern server-side Java template engine for both web and standalone environments.
+
+Thymeleaf's main goal is to bring elegant natural templates to your development workflow — HTML that can be correctly displayed in browsers and also work as static prototypes, allowing for stronger collaboration in development teams.
+
+With modules for Spring Framework, a host of integrations with your favourite tools, and the ability to plug in your own functionality, Thymeleaf is ideal for modern-day HTML5 JVM web development — although there is much more it can do.
+
+Natural templates
+HTML templates written in Thymeleaf still look and work like HTML, letting the actual templates that are run in your application keep working as useful design artifacts.
+
+```html
+
+<table>
+  <thead>
+    <tr>
+      <th th:text="#{msgs.headers.name}">Name</th>
+      <th th:text="#{msgs.headers.price}">Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="prod: ${allProducts}">
+      <td th:text="${prod.name}">Oranges</td>
+      <td th:text="${#numbers.formatDecimal(prod.price, 1, 2)}">0.99</td>
+    </tr>
+  </tbody>
+</table>
+
+```
+
+<br>
+
+**官网教学文档**  
+https://www.thymeleaf.org/documentation.html
 
 
+
+<br>
+
+## Thymeleaf 常用标签
+
+
+<br>
 
 ##  Thymeleaf 标准表达式
 
+<br>
 
+# 整合 Thymeleaf
 
-## Thymeleaf 基本使用
+<br>
 
-
-
-创建springboot项目
+**创建springboot项目**
 
 <img src="../img/image-20200627173929266.png" alt="image-20200627173929266" style="zoom:50%;" />
 
 
+<br>
 
 ```xml
  <dependencies>
@@ -34,57 +80,63 @@
 
 ```
 
-配置thymeleaf模板缓存application.properties
+<br>
 
-```xml
-#模板缓存
-spring.thymeleaf.cache=true
-#模板编码
-spring.thymeleaf.encoding=UTF-8
-#模板样式
-spring.thymeleaf.mode=HTML5
-#指定模板存放路径
-spring.thymeleaf.prefix=classpath:/templates/
-#指定模板页面的后缀
-spring.thymeleaf.suffix=.html
+**配置thymeleaf模板缓存application.yml**
+
+<br>
+
+```yaml
+
+spring:
+  thymeleaf:
+    mode: HTML
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+    encoding: UTF-8
+
+    
 ```
 
+<br>
 
 
-## 4.5 使用Thymeleaf 完成数据的页面展示
+#  使用 Thymeleaf 完成数据的页面展示
 
-```properites
+```yaml
 #模板缓存改成false，上线后改成true
-spring.thymeleaf.cache=false
+spring:
+    cache: false
 ```
 
-controller
-
-```java
-package com.siliang.controller;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.Calendar;
-
-@Controller
-public class LoginController {
-    @RequestMapping(value = "/login")
-    public String login(Model model){
-        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-        model.addAttribute("currentYear",currentYear);
-        return "login";
-    }
-}
-```
-
-<img src="../img/image-20200627181258325.png" alt="image-20200627181258325" style="zoom:50%;" />
 
 
 
-login.html
+
+# 使用Thymeleaf配置国际化页面
+
+
+
+**前端资源目录结构**
+
+> 前端资源下载
+>
+> https://share.weiyun.com/iVq52myH
+
+<img src="../img/image-20210718111446990.png" alt="image-20210718111446990" style="zoom:50%;" />
+
+
+
+
+
+
+
+<br>
+
+
+
+**login.html**
 
 ```html
 <!DOCTYPE html>
@@ -122,13 +174,19 @@ login.html
 
 
 
-## 4.6 使用Thymeleaf配置国际化页面
+<br>
+
+
 
 <img src="../img/image-20200627190241697.png" alt="image-20200627190241697" style="zoom:50%;" />
 
 
 
-login.properties
+<br>
+
+
+
+**login.properties**
 
 ```properties
 login.tip=请登录
@@ -138,7 +196,9 @@ login.rememberme=记住我
 login.button=登录
 ```
 
-login_zh_CN.properties
+<br>
+
+**login_zh_CN.properties**
 
 ```properties
 login.tip=请登录
@@ -148,7 +208,9 @@ login.rememberme=记住我
 login.button=登录
 ```
 
-login_en_US.properties
+<br>
+
+**login_en_US.properties**
 
 ```properties
 login.tip=Please sign in
@@ -158,15 +220,26 @@ login.rememberme=Remember me
 login.button=Login
 ```
 
-在application.properties中配置国际化文件的基础名
+
+
+<br>
+
+**在application.properties中配置国际化文件的基础名**
 
 ```properties
 #配置国际化文件基础名
 spring.messages.basename=i18n.login
 ```
 
-定制区域化解析器
-<img src="../img/image-20200627185412814.png" alt="image-20200627185412814" style="zoom:50%;" />
+
+
+<br>
+
+
+
+**定制区域化解析器**
+
+> 在 package com.wukongnotnull.config 下
 
 ```java
 package com.wukongnotnull.config;
@@ -202,24 +275,65 @@ public class MyLocaleResolver implements LocaleResolver {
         }
         return locale;
     }
-    
+
     @Override
     public void setLocale(HttpServletRequest httpServletRequest, @Nullable
             HttpServletResponse httpServletResponse, @Nullable Locale locale) {
     }
-    
+
     // 将自定义的MyLocaleResolver类重新注册为一个类型LocaleResolver的Bean组件
     @Bean
     public LocaleResolver localeResolver(){
         return new MyLocaleResolver();
     }
-    
+
 }
 ```
 
-启动后，浏览器测试
+<br>
 
-**还是出现中文乱码**
+**controller**
+
+```java
+package com.wukongnotnull.controller;
+//author: 悟空非空也（B站/知乎/公众号）
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.Calendar;
+
+@Controller
+public class IndexController {
+
+    @GetMapping(value = "/login")
+    public String login(){
+        return "login";
+    }
+
+    @GetMapping(value = "/toLoginPage")
+    public  String toLoginPage(Model model){
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        model.addAttribute("currentYear",currentYear);
+        return "login";
+    }
+
+}
+
+```
+
+
+
+
+
+**启动后浏览器测试**
+
+
+
+
+
+# 出现中文乱码
 
 ![image-20200627193632870](../img/image-20200627193632870.png)
 
@@ -233,8 +347,9 @@ public class MyLocaleResolver implements LocaleResolver {
 
 在创建新项目前，将idea进行字符编码设置，这样保证项目和配置文件中的所有中文打字都是使用utf-8编码
 
-<img src="../img/image-20200627194006830.png" alt="image-20200627194006830" style="zoom:50%;" />
 
+
+![image-20200627194006830.png](../img/image-20200627194006830.png)
 
 
 

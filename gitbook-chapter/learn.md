@@ -1,7 +1,9 @@
 # 上传GitHub pages
 
 ## 方法一
-项目根目录下创建 docs文件夹，将_book目录下的所有复制过来
+项目根目录下创建 docs文件夹，将_book目录下的所有复制过来<br>
+或将 _book 目录重命名 docs 目录
+
 
 ## 方法二
 > 创建gh-pages 分支
@@ -16,19 +18,19 @@ git init
 ```
 
 3.创建gh-pages分支
-```angular2html
+```
 git checkout --orphan gh-pages
 ```
 
 
 4.添加文件到暂存区
-```angular2html
+```
 git add .
 ```
 
 
 5.添加信息
-```angular2html
+```
 git commit -m "init project"
 ```
 

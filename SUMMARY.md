@@ -38,7 +38,7 @@
 
 -  [支持视图技术](view-tech/view-tech.md) 
 
-  - [thymeleaf](view-tech/thymeleaf.md) 
+  - [整合 thymeleaf](view-tech/thymeleaf.md) 
 
   
 
