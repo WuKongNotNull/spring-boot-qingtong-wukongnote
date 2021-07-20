@@ -6,7 +6,7 @@
 
 <br>
 
-# 基于注解的Redis缓存实现
+# 基于注解的 Redis 缓存实现
 
 
 
@@ -26,9 +26,11 @@
 
 ```xml
 #redis数据库的连接配置
-spring.redis.host=127.0.0.1
-spring.redis.port=6379
-spring.redis.password=
+spring:
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
 ```
 
 <br>
@@ -54,8 +56,10 @@ public class RedisSprongbootApplication {
 > **增加功能直接插入mysql数据库**
 
 ```java
-package com.wukongnotnull.service;
-
+package com.wukongnotnull.repository;
+    /*
+    author: 悟空非空也（B站/知乎/公众号）
+    */
 import com.wukongnotnull.domain.Comment;
 import com.wukongnotnull.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,27 +116,119 @@ public class CommentServiceImpl implements  CommentService {
 
 **实体类序列化**
 
-<img src="../img/image-20200701104411270-5969139.png" alt="image-20200701104411270" style="zoom:50%;" />
-
 ```java
-@Entity(name = "t_comment")
-public class Comment implements Serializable {
-    @Id//注意导包 javax.persistence.Id
+package com.wukongnotnull.domain;
+//author: 悟空非空也（B站/知乎/公众号）
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity(name = "b_comment")
+public class Comment  implements Serializable {
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "content")
     private String content;
+    @Column(name = "author")
     private String author;
-    @Column(name = "a_id")//实现映射
-    private Integer aId;//此属性名和表中的字段a_id不一致，不能自动映射，需要在application.properties中进行配置
+    @Column(name = "article_id")
+    private Integer articleId;
+
+
+}
+
 ```
 
 <br>
 
-# 基于API的Redis缓存实现
+# 自定义RedisCacheManager（基于注解的缓存数据的json格式化）
+
+
+
+>  **基于注解的，基于api的无效，实体类可以删除ImplementSeriable 序列化**
+>
+>  测试之前，先清空 Redis 数据库中的数据，不然会因数据库中的乱码产生报错
+
+
+
+```java
+package com.wukongnotnull.config;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import java.time.Duration;
+
+@Configuration//定义为配置类
+public class RedisConfig {
+
+    @Bean
+    public RedisCacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
+        // 分别创建String和JSON格式序列化对象，对缓存数据key和value进行转换
+        RedisSerializer<String> strSerializer = new StringRedisSerializer();
+        Jackson2JsonRedisSerializer<Object> jacksonSeial =
+                new Jackson2JsonRedisSerializer<>(Object.class);
+        // 解决查询缓存转换异常的问题
+        ObjectMapper om = new ObjectMapper();
+        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        jacksonSeial.setObjectMapper(om);
+
+        // 定制缓存数据序列化方式及时效
+        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofDays(1))
+                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(strSerializer))
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(jacksonSeial))
+                .disableCachingNullValues();
+
+        return RedisCacheManager.builder(redisConnectionFactory).cacheDefaults(config).build();
+    }
+}
+
+
+
+```
+
+<br>
+
+**使用 Redis Desktop Manager 客户端查看数据库情况**
+
+<img src="../img/image-20200711141612683-5969139.png" alt="image-20200711141612683" style="zoom:50%;" />
+
+
+
+
+
+
+
+
+
+
+
+# 基于 API 的 Redis 缓存实现
 
 ```java
 @SpringBootApplication
-
 public class RedisSprongbootApplication {
 
     public static void main(String[] args) {
@@ -148,53 +244,35 @@ public class RedisSprongbootApplication {
 
 ```java
 package com.wukongnotnull.domain;
+//author: 悟空非空也（B站/知乎/公众号）
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity(name = "t_comment")
-public class Comment implements Serializable {
-    @Id//注意导包 javax.persistence.Id
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity(name = "b_comment")
+public class Comment  implements Serializable {
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "content")
     private String content;
+    @Column(name = "author")
     private String author;
-    @Column(name = "a_id")//实现映射
-    private Integer aId;//此属性名和表中的字段a_id不一致，不能自动映射，需要在application.properties中进行配置
+    @Column(name = "article_id")
+    private Integer articleId;
 
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public Integer getaId() {
-        return aId;
-    }
-
-    public void setaId(Integer aId) {
-        this.aId = aId;
-    }
 }
+
 
 ```
 
@@ -204,25 +282,58 @@ public class Comment implements Serializable {
 
 ```java
 package com.wukongnotnull.repository;
-
+    /*
+    author: 悟空非空也（B站/知乎/公众号）
+    */
 import com.wukongnotnull.domain.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.transaction.annotation.Transactional;
 
-//接口遵循jpa的规则
-public interface CommentRepository extends JpaRepository<Comment,Integer> {
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
 
-    //modify comment according id and author
-    @Transactional//进行事务管理
+public interface CommentRepository extends JpaRepository<Comment, Integer> {
+
+    @Override
+    List<Comment> findAll();
+
+    @Override
+    Optional<Comment> findById(Integer id);
+
+    // 查询条件：作者不为空
+    List<Comment> findByAuthorNotNull();
+
+
+    @Override
+    long count();
+
+    @Override
+    <S extends Comment> S saveAndFlush(S s);
+
+    @Query("select c from b_comment c where c.articleId=?1")
+    List<Comment> getCommentList(Integer articleId);
+
+    @Query(value = "select * from b_comment c where c.article_id=?1",nativeQuery = true)
+    List<Comment> getCommentList2(Integer articleId);
+
+    @Transactional
     @Modifying
-    @Query("update t_comment set author=?1 where id=?2")
-    public int updateComment(String author,Integer id);
+    @Query(value = "update b_comment set author =?1  where id =?2 ",nativeQuery = true)
+    int updateComment(String author,Integer id);
 
+    @Transactional
+    @Modifying
+    @Query(value = "delete from b_comment where id = ?1",nativeQuery = true)
+    int deleteComment(Integer id);
 
-    
+    @Override
+    <S extends Comment> S save(S entity);
+
 }
+
+
 
 ```
 
@@ -251,7 +362,7 @@ public class ApiCommentService {
     @Autowired
     private CommentRepository commentRepository;
 
-    @Autowired
+    @Autowired  // 引入 RedisTemplate
     private RedisTemplate redisTemplate;
 
     /**
@@ -278,6 +389,7 @@ public class ApiCommentService {
         }
 
     }
+  
     /**
      * 更新方法
      */
@@ -295,7 +407,7 @@ public class ApiCommentService {
      * 删除方法
      */
      public void deleteComment(Integer id){
-         //删除数据库中的数据
+         //删除 mysql 数据库中的数据
          commentRepository.deleteById(id);
          //删除redis缓存中的数据
          redisTemplate.delete("comment_" + id);
@@ -422,65 +534,6 @@ public class RedisConfig {
 
 
 <br>
-
-# 自定义RedisCacheManager（基于注解的缓存数据的json格式化）
-
-
-
-**基于注解的，基于api的无效，实体类可以删除ImplementSeriable 序列化**
-
-```java
-package com.wukongnotnull.config;
-
-
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.cache.RedisCacheConfiguration;
-import org.springframework.data.redis.cache.RedisCacheManager;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.RedisSerializationContext;
-import org.springframework.data.redis.serializer.RedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
-
-import java.time.Duration;
-
-@Configuration//定义为配置类
-public class RedisConfig {
-
-    @Bean
-    public RedisCacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
-        // 分别创建String和JSON格式序列化对象，对缓存数据key和value进行转换
-        RedisSerializer<String> strSerializer = new StringRedisSerializer();
-        Jackson2JsonRedisSerializer jacksonSeial =
-                new Jackson2JsonRedisSerializer(Object.class);
-        // 解决查询缓存转换异常的问题
-        ObjectMapper om = new ObjectMapper();
-        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        jacksonSeial.setObjectMapper(om);
-
-        // 定制缓存数据序列化方式及时效
-        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofDays(1))
-                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(strSerializer))
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(jacksonSeial))
-                .disableCachingNullValues();
-
-        RedisCacheManager cacheManager = RedisCacheManager.builder(redisConnectionFactory).cacheDefaults(config).build();
-        return cacheManager;
-    }
-}
-
-```
-
-<img src="../img/image-20200711141612683-5969139.png" alt="image-20200711141612683" style="zoom:50%;" />
-
-
 
 
 
