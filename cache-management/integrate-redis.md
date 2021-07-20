@@ -1,12 +1,16 @@
-# Spring Boot 缓存注解介绍
+# Redis 缓存介绍
+
+<br>
+
+<br>
+
+<br>
+
+# 基于注解的Redis缓存实现
 
 
 
-## 基于注解的Redis缓存实现
-
-
-
-pom中添加redis的依赖启动器
+**pom中添加redis的依赖启动器**
 
 ```xml
        <!--redis-->
@@ -16,9 +20,9 @@ pom中添加redis的依赖启动器
         </dependency>
 ```
 
+<br>
 
-
-配置redis的连接配置
+**配置redis的连接配置**
 
 ```xml
 #redis数据库的连接配置
@@ -27,9 +31,9 @@ spring.redis.port=6379
 spring.redis.password=
 ```
 
+<br>
 
-
-启动类上添加注解@EnableCache
+**启动类上添加注解@EnableCaching**
 
 ```java
 @SpringBootApplication
@@ -43,11 +47,11 @@ public class RedisSprongbootApplication {
 }
 ```
 
+<br>
 
+**service层上对删改查操作添加redis缓存注解**
 
-service层上对删改查操作添加redis缓存注解
-
-**增加功能直接插入mysql数据库**
+> **增加功能直接插入mysql数据库**
 
 ```java
 package com.wukongnotnull.service;
@@ -104,11 +108,11 @@ public class CommentServiceImpl implements  CommentService {
 
 ```
 
+<br>
 
+**实体类序列化**
 
-实体类序列化
-
-![image-20200701104411270](../img/image-20200701104411270-5969139.png)
+<img src="../img/image-20200701104411270-5969139.png" alt="image-20200701104411270" style="zoom:50%;" />
 
 ```java
 @Entity(name = "t_comment")
@@ -122,9 +126,9 @@ public class Comment implements Serializable {
     private Integer aId;//此属性名和表中的字段a_id不一致，不能自动映射，需要在application.properties中进行配置
 ```
 
+<br>
 
-
-## 6.5基于API的Redis缓存实现
+# 基于API的Redis缓存实现
 
 ```java
 @SpringBootApplication
@@ -138,9 +142,9 @@ public class RedisSprongbootApplication {
 }
 ```
 
+<br>
 
-
-实体类Comment
+**实体类Comment**
 
 ```java
 package com.wukongnotnull.domain;
@@ -194,7 +198,9 @@ public class Comment implements Serializable {
 
 ```
 
-repository:CommentRepository
+<br>
+
+**repository:CommentRepository**
 
 ```java
 package com.wukongnotnull.repository;
@@ -220,9 +226,9 @@ public interface CommentRepository extends JpaRepository<Comment,Integer> {
 
 ```
 
+<br>
 
-
-service: ApiCommentService
+**service: ApiCommentService**
 
 ```java
 package com.wukongnotnull.service;
@@ -301,9 +307,9 @@ public class ApiCommentService {
 
 ```
 
+<br>
 
-
-controller:ApiCommentController
+**controller:ApiCommentController**
 
 ```java
 package com.wukongnotnull.controller;
@@ -351,23 +357,19 @@ public class ApiCommentController {
 
 ```
 
+<br>
 
-
-## 6.6自定义RedisTemplate(基于api的缓存数据json格式化)
+# 自定义RedisTemplate(基于api的缓存数据json格式化)
 
 **痛点**
 
 缓存管理的实体类使用的jdk序列化机制，缺点：不便于可视化
 
-![image-20200711132140308](../img/image-20200711132140308-5969139.png)
-
-
-
-
-
 
 
 缓存中的数据进行json序列化
+
+
 
 对基于api的redis缓存有效，注解无效
 
@@ -413,13 +415,15 @@ public class RedisConfig {
 
 ```
 
-![image-20200711135024037](../img/image-20200711135024037-5969139.png)
+<img src="../img/image-20200711135024037-5969139.png" alt="image-20200711135024037" style="zoom:50%;" />
 
-![image-20200711141704095](../img/image-20200711141704095-5969139.png)
+<img src="../img/image-20200711141704095-5969139.png" alt="image-20200711141704095" style="zoom: 33%;" />
 
 
 
-## 自定义RedisCacheManager（基于注解的缓存数据的json格式化）
+<br>
+
+# 自定义RedisCacheManager（基于注解的缓存数据的json格式化）
 
 
 
@@ -474,6 +478,14 @@ public class RedisConfig {
 
 ```
 
-![image-20200711141612683](../img/image-20200711141612683-5969139.png)
+<img src="../img/image-20200711141612683-5969139.png" alt="image-20200711141612683" style="zoom:50%;" />
 
-# 
+
+
+
+
+<br>
+
+<br>
+
+<br>

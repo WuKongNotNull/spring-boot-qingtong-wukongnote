@@ -110,7 +110,7 @@ spring:
     cache: false
 ```
 
-
+<br>
 
 
 
@@ -120,14 +120,11 @@ spring:
 
 **前端资源目录结构**
 
-> 前端资源下载
+> 前端资源下载链接
 >
 > https://share.weiyun.com/iVq52myH
 
 <img src="../img/image-20210718111446990.png" alt="image-20210718111446990" style="zoom:50%;" />
-
-
-
 
 
 
@@ -149,7 +146,7 @@ spring:
     <link th:href="@{/login/css/signin.css}" rel="stylesheet">
 </head>
 <body class="text-center">
-<!--  用户登录form表单 -->
+
 <form class="form-signin">
     <img class="mb-4" th:src="@{/login/img/login.jpg}" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal" th:text="#{login.tip}">请登录</h1>
@@ -171,14 +168,6 @@ spring:
 </html>
 
 ```
-
-
-
-<br>
-
-
-
-<img src="../img/image-20200627190241697.png" alt="image-20200627190241697" style="zoom:50%;" />
 
 
 
@@ -239,7 +228,7 @@ spring.messages.basename=i18n.login
 
 **定制区域化解析器**
 
-> 在 package com.wukongnotnull.config 下
+> 在  com.wukongnotnull.config 下创建 MyLocaleResolver 类
 
 ```java
 package com.wukongnotnull.config;
@@ -333,7 +322,7 @@ public class IndexController {
 
 
 
-# 出现中文乱码
+# 中文乱码解决
 
 ![image-20200627193632870](../img/image-20200627193632870.png)
 

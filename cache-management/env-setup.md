@@ -2,109 +2,161 @@
 
 
 
-创建项目
+**创建项目**
 
 ![image-20200630201135910](../img/image-20200630201135910-5969368.png)
 
 
 
-配置文件配置
+<br>
+
+**pom.xml**
+
+```xml
+<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+```
+
+
+
+<br>
+
+**配置文件配置**
 
 ```properties
 #mysql数据库连接配置
-#spring.datasource.driver-class-name=com.mysql.jdbc.Driver
-spring.datasource.url=jdbc:mysql://localhost:3306/springbootdata?serverTimezone=UTC
-spring.datasource.username=root
-spring.datasource.password=root
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/wukong_blog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&autoReconnect=true
+    username: root
+    password: rootroot
 
-#显示使用JPA进行数据库查询
-spring.jpa.show-sql=true
+ # 显示 sql 语句
+  jpa:
+    show-sql: true
 ```
 
 
 
-实体类
+**实体类**
 
 ```java
-package com.wukongnotnull.domain;
-
-
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity(name = "t_comment")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity(name = "b_comment")
 public class Comment {
-    @Id//注意导包 javax.persistence.Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "content")
     private String content;
+    @Column(name = "author")
     private String author;
-    @Column(name = "a_id")//实现映射
-    private Integer aId;//此属性名和表中的字段a_id不一致，不能自动映射，需要在application.properties中进行配置
+    @Column(name = "article_id")
+    private Integer articleId;
 
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public Integer getaId() {
-        return aId;
-    }
-
-    public void setaId(Integer aId) {
-        this.aId = aId;
-    }
 }
-
 ```
 
-编写自定义仓库类，继承JpaRepository
+<br>
+
+**编写自定义仓库类，继承JpaRepository**
 
 ```java
 package com.wukongnotnull.repository;
-
+    /*
+    author: 悟空非空也（B站/知乎/公众号）
+    */
 import com.wukongnotnull.domain.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.transaction.annotation.Transactional;
 
-//接口遵循jpa的规则
-public interface CommentRepository extends JpaRepository<Comment,Integer> {
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
 
-    //modify comment according id and author
-    @Transactional//进行事务管理
+public interface CommentRepository extends JpaRepository<Comment, Integer> {
+
+    @Override
+    List<Comment> findAll();
+
+    @Override
+    Optional<Comment> findById(Integer id);
+
+    // 查询条件：作者不为空
+    List<Comment> findByAuthorNotNull();
+
+
+    @Override
+    long count();
+
+    @Override
+    <S extends Comment> S saveAndFlush(S s);
+
+    @Query("select c from b_comment c where c.articleId=?1")
+    List<Comment> getCommentList(Integer articleId);
+
+    @Query(value = "select * from b_comment c where c.article_id=?1",nativeQuery = true)
+    List<Comment> getCommentList2(Integer articleId);
+
+    @Transactional
     @Modifying
-    @Query("update t_comment c set c.author=?1 where c.id=?2")
-    public int updateComment(String author,Integer id);
+    @Query(value = "update b_comment set author =?1  where id =?2 ",nativeQuery = true)
+    int updateComment(String author,Integer id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "delete from b_comment where id = ?1",nativeQuery = true)
+    int deleteComment(Integer id);
+
+    @Override
+    <S extends Comment> S save(S entity);
 
 }
 
 ```
 
+<br>
 
-
-service层
+**service层**
 
 ```java
 package com.wukongnotnull.service;
@@ -171,9 +223,9 @@ public class CommentServiceImpl implements  CommentService {
 
 ```
 
+<br>
 
-
-controller层
+**controller层**
 
 ```java
 package com.wukongnotnull.controller;

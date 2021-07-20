@@ -1,6 +1,6 @@
 ## jar包方式打包部署
 
-maven打包插件
+**maven打包插件**
 
 ```xml
     <build>
@@ -13,17 +13,31 @@ maven打包插件
     </build>
 ```
 
-点击package
+<br>
+
+**点击package**
 
 <img src="../img/image-20200629185518599.png" alt="image-20200629185518599" style="zoom:50%;" />
 
-保存路径
+<br>
+
+
+
+**保存路径**
 
 <img src="../img/image-20200629185556075.png" alt="image-20200629185556075" style="zoom:50%;" />
 
-部署后就可以访问
+<br>
+
+
+
+**部署后就可以访问**
 
 java -jar target\myspringboot-mybatis-0.0.1-SNAPSHOT.jar
+
+
+
+<br>
 
 **注意**
 

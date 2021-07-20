@@ -1,25 +1,16 @@
 ## war包方式打包部署
 
-1
+**pom.xml**
 
 ```xml
  <packaging>war</packaging>
 ```
 
-
-
-1.2
-
-```
-<!--添加外部的tomcat-->
-
-```
+<br>
 
 
 
-
-
-2
+**修改启动类**
 
 ```java
 @SpringBootApplication
@@ -38,21 +29,27 @@ public class MyspringbootMybatisApplication extends SpringBootServletInitializer
 
 ```
 
+<br>
 
-
-3打包 
+**打包**
 
 <img src="../img/image-20200629195527399.png" alt="image-20200629195527399" style="zoom:50%;" />
 
 
 
-4部署到外部的tomcat的webapp内
+<br>
+
+
+
+**部署到外部的tomcat的webapp内**
 
 <img src="../img/image-20200629195656565.png" alt="image-20200629195656565" style="zoom:50%;" />
 
 
 
-5 启动tomcat，部署成功
+<br>
+
+**启动tomcat部署成功**
 
 bin\startup.bat指令
 
@@ -60,6 +57,14 @@ bin\startup.bat指令
 
 
 
+<br>
+
 **注意**
 
-一个既有前端又有后端的web项目，jar包不包含前端文件（jsp\html\css\img等），war包包含所有
+Jar 包内嵌服务器（Tomcat），war包不含服务器，需要外部服务器才能运行
+
+
+
+<br><br>
+
+<br>

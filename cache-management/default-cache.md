@@ -1,12 +1,10 @@
 ## Spring Boot默认缓存体验
 
-
-
 **spring boot 自带缓存机制，可以使用默认缓存，避免每次查询都去数据库访问一边，避免资源消耗**
 
+<br>
 
-
-在启动类上添加注解@EnableCache
+**在启动类上添加注解 @EnableCaching**
 
 ```java
 package com.wukongnotnull;
@@ -16,20 +14,20 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
-@EnableCaching//开启springboot默认缓存
-public class RedisSprongbootApplication {
+@EnableCaching //开启springboot默认缓存
+public class RedisSpringbootApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(RedisSprongbootApplication.class, args);
+        SpringApplication.run(RedisSpringbootApplication.class, args);
     }
 
 }
 
 ```
 
+<br>
 
-
-在service层的实现类上添加注解@Cacheable，开辟缓存空间
+**在service层的实现类的方法上添加注解 @Cacheable，开启缓存空间**
 
 ```java
 package com.wukongnotnull.service;
@@ -52,6 +50,7 @@ public class CommentServiceImpl implements  CommentService {
     public Comment addComment(Comment comment){
         return this.commentRepository.save(comment);
     }
+  
     //delete
     public void deleteComment(Integer id){
         this.commentRepository.deleteById(id);
@@ -76,6 +75,14 @@ public class CommentServiceImpl implements  CommentService {
 
 ```
 
+<br>
+
+**测试，多次查询，在控制台只打印第一次查询日志**
 
 
-测试，多次查询，在控制台只打印第一次查询日志
+
+<br>
+
+<br>
+
+<br>
