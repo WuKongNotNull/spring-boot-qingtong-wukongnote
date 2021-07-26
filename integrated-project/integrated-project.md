@@ -1,30 +1,40 @@
-# Spring Boot综合项目实战
+# Spring Boot 综合项目实战
 
-## 10.1系统概述
-
-## 10.2系统开发及运行环境
-
-## 10.3文件组织结构
-
-## 10.4数据库设计
-
-<img src="../img/image-20200630094947741.png" alt="image-20200630094947741" style="zoom:50%;" />
+## 项目概述
 
 
 
-![image-20200630095035774](../img/image-20200630095035774-5995847.png)
+## 系统开发及运行环境
 
-<img src="../img/image-20200630095010557.png" alt="image-20200630095010557" style="zoom:50%;" />
+- Window 10
 
-![image-20200630095035774](../img/image-20200630095035774-5995847.png)
+- jdk 1.8
+
+- Maven 3.6
+
+- Mysql 8.x
+
+- redis 
+
+- Idea
+
+  
+
+## 项目结构
 
 
 
-<img src="../img/image-20200630095056565.png" alt="image-20200630095056565" style="zoom:50%;" />
 
-<img src="../img/image-20200630095132718.png" alt="image-20200630095132718" style="zoom:50%;" />
 
-<img src="../img/image-20200630095206593.png" alt="image-20200630095206593" style="zoom:50%;" />
+
+
+## 前端素材
+
+
+
+
+
+
 
 
 

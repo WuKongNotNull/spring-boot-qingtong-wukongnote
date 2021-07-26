@@ -1,81 +1,129 @@
-## 无返回值异步任务调用
+# 无返回值异步任务调用
+
+>  应用场景： 发送注册验证码
 
 
 
-1-application.java
-
-```java
-@EnableAsync  //support async annotation
-@SpringBootApplication
-public class AsynChapter9Application {
+```xml
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
 ```
 
+<br>
 
 
-2-service
+
+**1-application.java**
 
 ```java
-package com.wukongnotnull.asynchapter9.service;
+package com.wukongnotnull;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
+
+@EnableAsync
+@SpringBootApplication
+public class SbTaskApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(SbTaskApplication.class, args);
+    }
+
+}
+
+```
+
+<br>
+
+**2-service**
+
+```java
+package com.wukongnotnull.service;
+//author: 悟空非空也（B站/知乎/公众号）
+
+public interface MyAsyncService  {
+    public void sendSms();
+
+}
+
+package com.wukongnotnull.service;
+//author: 悟空非空也（B站/知乎/公众号）
 
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyAsyncService {
+public class MyAsyncServiceImpl implements  MyAsyncService{
 
     @Async
-    public void sendSMS(){
-        System.out.println("send sms is progressing");
+    public void sendSms(){
         long startTime = System.currentTimeMillis();
+        System.out.println("service--->sendSms-->发送短信进行中。。。");
         try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
+            Thread.sleep(5000);
+        }catch (Exception e){
             e.printStackTrace();
         }
         long endTime = System.currentTimeMillis();
-        System.out.println("service --->the cost of total time is"+(endTime-startTime));
+        System.out.println("service 共耗时"+(endTime-startTime));
+
     }
-
-
 }
+
 ```
 
+<br>
 
-
-3-controller
+**3-controller**
 
 ```java
+package com.wukongnotnull.controller;
+//author: 悟空非空也（B站/知乎/公众号）
+
+import com.wukongnotnull.service.MyAsyncService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 @RestController
-public class AsyncController {
+public class MyAsyncController {
 
     @Autowired
     private MyAsyncService myAsyncService;
 
-    @RequestMapping("/sendSMS")
-    public String sendSMS(){
-        long startTime = System.currentTimeMillis();
-        myAsyncService.sendSMS();
-        long endTime = System.currentTimeMillis();
-        System.out.println(" controller -->total time costs "+(endTime-startTime));
-        return "sms has been sent, wait for 10 seconds";
+    @GetMapping("/sendsms")
+    public String sendSms(){
+        System.out.println("controller-->sendSms--> 开始执行");
+        myAsyncService.sendSms();
+        System.out.println("controller-->sendSms--> 执行结束");
+        return "短信验证码已发送，请稍后查收";
     }
 
+
 }
+
 ```
 
+<br>
 
+**4-test**
 
-4-test
-
-![image-20200724161535960](../img/image-20200724161535960-5995286.png)
-
-
-
-## 9.2 有返回值异步任务调用
+<img src="../img/image-20210723161301811.png" alt="image-20210723161301811" style="zoom:50%;" />
 
 
 
-1-sevice
+<br>
+
+# 有返回值异步任务调用
+
+> 2个方法 processA() 和 processB()  同时执行，不是先后执行
+
+
+
+**1-sevice**
 
 ```java
 @Service
@@ -113,9 +161,9 @@ public class MyAsyncService {
 
 ```
 
+<br>
 
-
-2-controller
+**2-controller**
 
 ```java
  @RequestMapping("/statistics")
@@ -135,13 +183,13 @@ public class MyAsyncService {
     }
 ```
 
+<br>
 
+**3-test**
 
-3-test
+<img src="../img/image-20210723173609576.png" alt="image-20210723173609576" style="zoom:50%;" />
 
-![image-20200724164424251](../img/image-20200724164424251-5995286.png)
-
-
+<br>
 
 **所谓异步就是2个方法同时执行**
 

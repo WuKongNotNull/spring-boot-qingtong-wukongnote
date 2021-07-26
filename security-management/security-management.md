@@ -1,12 +1,12 @@
-## SpringSecurity介绍
+# SpringSecurity介绍
 
 
 
-## 7.2Spring Security快速入门
+# Spring Security 快速入门
 
 
 
-1
+**pom.xml**
 
 ```xml
  <dependency>
@@ -24,21 +24,25 @@
         </dependency>
 ```
 
+<br>
 
 
-2
+
+**直接url访问**
+
+>默认显示 登录界面，该界面是由spring security提供的
+>用户名  user
+>密码   启动项目时候，在控制台随机生成
+
+
 
 ![image-20200711182516541](../img/image-20200711182516541-5970096.png)
 
-```
-默认显示 登录界面，该界面是由spring security提供的
-用户名  user
-密码   启动项目时候，在控制台随机生成
-```
+<br>
 
 
 
-## 7.3Mvc Security安全配置介绍
+## Mvc Security 安全配置介绍
 
 
 

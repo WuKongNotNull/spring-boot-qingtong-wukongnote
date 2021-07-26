@@ -1,14 +1,50 @@
-## 定时任务介绍
+# 定时任务介绍
+
+**@Scheduled注解**
+
+
 
 https://www.jianshu.com/p/1defb0f22ed1
 
 
 
-## 9.4 定时任务实现
+# 定时任务实现
 
-**新建一个定时任务管理的业务处理类ScheduledTaskService**，并在该类中编写对应的定时任务处理方法。使用@Scheduled注解声明了三个定时任务方法，这三个方法定制的执行规则基本相同，都是每隔1分钟重复执行一次定时任务，在使用fixedDelay属性的方法scheduledTaskAfterSleep()中，使用Thread.sleep(10000)模拟该定时任务处理耗时为10秒钟。
+**新建定时业务处理类 ScheduledTaskService**
 
-service
+
+
+> 该类中编写定时任务处理方法使用 @Scheduled 注解声明了三个定时任务方法，
+>
+> 定制的执行规则基本相同，都是每隔1分钟重复执行一次定时任务
+>
+> 在使用 fixedDelay 属性的方法 scheduledTaskAfterSleep() 中，使用 Thread.sleep(10000 )模拟该定时任务处理耗时为10秒钟。
+
+
+
+<br>
+
+**启动类**
+
+```java
+@EnableScheduling
+@SpringBootApplication
+public class SbTaskApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(SbTaskApplication.class, args);
+    }
+
+}
+```
+
+
+
+
+
+<br>
+
+**service**
 
 ```java
 @Service
@@ -44,6 +80,12 @@ public class ScheduledTaskService {
 
 }
 ```
+
+<br>
+
+
+
+**启动启动类测试**
 
 ![image-20200724172612847](../img/image-20200724172612847-5995377.png)
 

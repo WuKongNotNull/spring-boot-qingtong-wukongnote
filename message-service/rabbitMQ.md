@@ -2,23 +2,29 @@
 
 ![image-20200723104834356](../img/image-20200723104834356-5994281.png)
 
-**工作模式介绍**
+<br>
 
-•Work queues（工作队列模式）
+**工作模式介绍**    
 
-•Publish/Subscribe（发布订阅模式）
+* Work queues（工作队列模式）
 
-•Routing（路由模式）
+*  Publish/Subscribe（发布订阅模式）
 
-•Topics（通配符模式）
+* Routing（路由模式）
 
-•RPC
+* Topics（通配符模式）
 
-•Headers（使用较少，不进行详细介绍）
+* RPC 
 
-## 8.4 安装RabbitMQ
+* Headers（使用较少）
 
-**注意版本的兼容，3.8版本需要20以上的，不然不兼容，注意**
+  <br>
+
+
+
+# 安装RabbitMQ
+
+**注意版本的兼容，3.8 版本需要Erlang语言包 20 以上的，不然不兼容，注意**
 
 <img src="../img/image-20200723154150870.png" alt="image-20200723154150870" style="zoom:33%;" />
 
@@ -34,11 +40,13 @@
 
 3、RabbitMQ可视化效果展示, RabbitMQ默认提供了两个端口号5672和15672，其中5672用作服务端口号，15672用作可视化管理端口号。在浏览器上访问http://localhost:15672(用户名和密码均为guest)
 
+<br>
+
+# Spring Boot 整合 RabbitMQ 环境搭建
 
 
-## 8.5 Spring Boot整合RabbitMQ环境搭建
 
-1-pom
+**pom.xml**
 
 ```xml
   <dependency>
@@ -51,29 +59,39 @@
         </dependency>
 ```
 
-2-application.properties
+<br>
 
-```properties
-#连接rabbitmq服务器
-spring.rabbitmq.host=localhost
-spring.rabbitmq.port=5672
-spring.rabbitmq.username=guest
-spring.rabbitmq.password=guest
-#配置rabbitmq虚拟主机路径 / ，默认可以省略
-spring.rabbitmq.virtual-host=/
+
+
+**application.xml**
+
+```xml
+spring:
+  rabbitmq:
+    host: localhost
+    username: guest
+    password: guest
+    virtual-host: /
+    port: 5672
+
 ```
 
+<br>
 
 
-## 8.6 Public/Subscribe发布/订阅工作模式
 
-1-基于api方式
+# Public/Subscribe 发布/订阅工作模式
 
-1.1 交换器和队列进行绑定
+## 1-基于api方式
+
+<br>
+
+**1.1 交换器和队列进行绑定，定制中间件,并运行@Test**
 
 ```java
  @Autowired
     private AmqpAdmin amqpAdmin;
+	// 定制中间件
 @Test
     public void amqpAdmin(){
         //定义fanout类型交换器
@@ -88,15 +106,21 @@ spring.rabbitmq.virtual-host=/
                 "fanout_exchange","",null));
 ```
 
+
+
+
+
 <img src="../img/image-20200723181403662.png" alt="image-20200723181403662" style="zoom:50%;" />
 
 <img src="../img/image-20200723181439925.png" alt="image-20200723181439925" style="zoom:33%;" />
 
+<br>
 
 
-1.2  消息发布者发布消息
 
-**先创建实体类，同时将实体类输出格式转换成json格式**
+**1.2  消息发布者发布消息**
+
+> **先创建实体类，同时将实体类输出格式转换成json格式**
 
 ```java
 package com.wukongnotnull.studyrabbitmq.domain;
@@ -149,15 +173,14 @@ public class RabbitMQConfig {
 
 ```
 
+<br>
 
-
-**消息发布者**
+>  **消息发布者**
 
 ```java
- 
-
-    @Autowired
+     @Autowired
     private RabbitTemplate  rabbitTemplate;
+
     @Test
     public void pushPublisher(){
         User user = new User();
@@ -167,9 +190,9 @@ public class RabbitMQConfig {
     }
 ```
 
+<br>
 
-
-1.3 消息消费者消费消息
+**1.3 消费者消费消息**
 
 ```java
 package com.wukongnotnull.studyrabbitmq.service;
@@ -199,9 +222,11 @@ public class RabbitMQService {
 
 ```
 
+<br>
 
 
-1.4 测试
+
+**1.4 测试**
 
 <img src="../img/image-20200723181308163.png" alt="image-20200723181308163" style="zoom:50%;" />
 
@@ -209,9 +234,7 @@ public class RabbitMQService {
 
 
 
-**2-基于配置类的方式**
-
-
+## **2-基于配置类的方式**
 
 **1**、打开RabbitMQ消息配置类**RabbitMQConfig**，定义消息转换器、**fanout**类型的交换器、不同名称的消息队列以及将不同名称的消息队列与交换器绑定。
 
@@ -278,9 +301,9 @@ public class RabbitMQConfig {
 
 ```
 
+<br>
 
-
-3-基于注解方式实现 发布/订阅模式
+## 3-基于注解方式实现发布/订阅模式
 
 ```java
 package com.wukongnotnull.studyrabbitmq.service;
@@ -295,7 +318,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class RabbitMQService {
 
-    @RabbitListener(bindings =@QueueBinding(value = @Queue("fanout_queue_email"), exchange = @Exchange(value = "fanout_exchange",type = "fanout")))
+    @RabbitListener(bindings =@QueueBinding(value = @Queue("fanout_queue_email"), 
+                    exchange = @Exchange(value = "fanout_exchange",type = "fanout")))
     public void psubConsumerEmailAno(User user) {
         System.out.println("邮件业务接收到消息： "+user);
     }
@@ -314,11 +338,9 @@ public class RabbitMQService {
 
 
 
-## 8.7 Routing路由工作模式
+#  Routing 路由工作模式
 
-1.使用基于注解的方式定制消息组件和消息消费者
-
-
+1.使用基于注解的方式定制消息组件和消息消费者  <br>
 
 **打开业务类**RabbitMQService，在该类中使用**@**RabbitListener**注解及其相关属性定制**Routing路由模式的消息组件，并模拟编写消息消费者接收的方法。
 
@@ -364,7 +386,7 @@ public class RabbitMQService {
 }
 ```
 
-
+<br>
 
 2.**消息发送者**发送消息
 
@@ -380,39 +402,43 @@ public class RabbitMQService {
     }
 ```
 
-
+<br>
 
 3-测试结果
 
 <img src="../img/image-20200724120422461.png" alt="image-20200724120422461" style="zoom:33%;" />
 
-
+<br>
 
 4-改造：
 
 ![image-20200724120609543](../img/image-20200724120609543-5994281.png)
 
+<br>
+
 5-测试结果为：
 
 <img src="../../../springboot/springboot笔记.assets/image-20200724120732863.png" alt="image-20200724120732863" style="zoom:33%;" />
 
+<br>
 
-
-## 8.8 Topics通配符工作模式
+#  Topics通配符工作模式
 
 “通配符交换机”（Topic Exchange）将路由键和某模式进行匹配。此时队列需要绑定在一个模式上。符号“#”匹配一个或多个词，符号“*”仅匹配一个词。因此“audit.#”能够匹配到“audit.irs.corporate”，但是“audit.*”只会匹配到“audit.irs”。（这里与我们一般的正则表达式的“*”和“#”刚好相反，这里我们需要注意一下。）
 举例：
 
-key:
+key:  
 
 info.#.email.#  的队列  ---》邮件业务订阅该队列的消息
 info.#.sms.#    的队列   ---》短信业务订阅该队列的消息
 
-routingKey:
+routingKey:     
 
-info.email  
-info.sms
-info.email.sms
+info.email
+info.sms 
+info.email.sms             
+
+<br>
 
 1-使用注解方式定制消息组件和消息订阅者（消费者）
 
@@ -452,6 +478,8 @@ public class RabbitMQService {
 }
 ```
 
+<br>
+
 2-消息发送者发送消息
 
 ```java
@@ -469,5 +497,15 @@ public class RabbitMQService {
     }
 ```
 
-# 
+
+
+
+
+
+
+<br>
+
+<br>
+
+<br>
 
