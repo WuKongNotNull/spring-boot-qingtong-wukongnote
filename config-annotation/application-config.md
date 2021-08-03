@@ -1,4 +1,6 @@
-#  application.properties配置文件
+##  application.properties配置文件
+
+**配置端口号**
 
 ```
 #配置端口号
@@ -9,7 +11,7 @@ server.servlet.context-path=/project-name
 
 
 
-# application.yaml配置文件
+## application.yaml配置文件
 
 ```
 #端口号 虚拟路径
