@@ -35,9 +35,8 @@
     "google-tongji-with-multiple-channel",
     "icp",
     "anchor-navigation-ex-toc",
-    "insert-logo",
+    "insert-logo-link-website",
     "pageview-count",
-    "popup",
     "flexible-alerts",
     "auto-scroll-table",
     "accordion",
@@ -93,7 +92,7 @@
       "site": "https://wukongnotnull.github.io/spring-boot-quickstart-wukongnote/",
       "author": "悟空非空也",
       "website": "悟空非空也",
-      "image": "/asset/weixin/weixin-QR-code.png",
+      "image": "/asset/weixin/weixin-QR-code.jpg",
       "copyProtect": false
 
     },
@@ -128,14 +127,16 @@
       },
       "multipleH1": false
     },
-    "insert-logo": {
+    "insert-logo-link-website": {
       "url": "/asset/wukong-favicon.ico",
-      "style": "background: none; max-height: 100px; min-height: 50px"
+      "link": "/index.html",
+      "target": "_self",
+      "style": "height: 100px"
     },
     "readmore":{
       "blogId": "27424-1628224972145-104",
       "name": "悟空非空也",
-      "qrcode": "http://wukongnotnull.cn/asset/weixin/weixin-QR-code.png",
+      "qrcode": "http://wukongnotnull.cn/asset/weixin/weixin-QR-code.jpg",
       "keyword": "wukong"
     }
 

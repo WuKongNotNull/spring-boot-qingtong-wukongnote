@@ -83,21 +83,21 @@
 
   
 - [消息服务](message-service/message-service.md) 
-  -[rabbitMQ 消息中间件](message-service/rabbitMQ.md) 
+    - [rabbitMQ 消息中间件](message-service/rabbitMQ.md) 
 
 
 -  [任务管理](task-management/task-management.md)
-  - [异步调用](task-management/asynch-call.md)
-  - [定时任务](task-management/timed-task.md)
-  - [发送邮件](task-management/send-email.md)
-  - [整合 Quartz](task-management/integrate-quartz.md)  
+    -  [异步调用](task-management/asynch-call.md)
+    -  [定时任务](task-management/timed-task.md)
+    -  [发送邮件](task-management/send-email.md)
+    -  [整合 Quartz](task-management/integrate-quartz.md)  
 
   
 
 - [指标监控](actuator-intergrate/actuator-intergrate.md) 
 
 
--  [综合项目](integrated-project/integrated-project.md) 
+- [综合项目](integrated-project/integrated-project.md) 
 
 
 
