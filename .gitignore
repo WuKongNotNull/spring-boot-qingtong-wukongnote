@@ -123,5 +123,6 @@ dist
 .idea
 *.iml
 gen
-.node_modules
+node_modules
+_book
 
