@@ -1,8 +1,9 @@
-# @ConfigurationProperties注入属性
+# 配置文件进行属性注入
+
+## @ConfigurationProperties注入属性
 
 
-
-第1种方法 properties
+第 1 种方法 properties
 
 ```properties
 #给类属性赋值
@@ -191,15 +192,23 @@ class MySpringbootApplicationTests {
 
 
 
-# @Value注入属性
+# @Value 注入属性
 
 
 
 @Value直接注入属性
 
-```prope
-#给基本数据数据类型注入
-flag=wukongnotnull
+```yaml
+person:
+  id: 2
+  name: wukongnotnull
+  family: [baba,mama,gege,jiejie]
+  hobbies: [dance,game,sing]
+  map: {level: 3,salary: 3000}
+  pet: {petName: wangcai, petAge: 3}
+
+
+flag: wukong
 ```
 
 
@@ -210,45 +219,66 @@ flag=wukongnotnull
 @SpringBootTest
 class MySpringbootApplicationTests {
 
-  
-    @Value(value = "${flag}") //直接注入，不需要setter方法
-    private String flag;
+
+    @Value(value="${flag}")
+    private  String flag;
+
+    @Value(value = "${person.id}")
+    private  Integer id;
+
+    @Value(value = "${person.name}")
+    private  String name;
+
+
+    @Value(value = "${person.family[0]}")
+    private String familyOne;
+
+    @Value(value = "${person.family}")
+    private List family;
+
+    @Value(value = "${person.hobbies[0]}")
+    private String hobbiesOne;
+
+    @Value(value="${person.hobbies}")
+    private String[] hobbies;
+
+    // 对于自定义对象或者Map类型的数据，需要直接取属性值
+    @Value(value = "${person.map.level}")
+    private Integer level;
+
+    @Value(value="${person.pet.petName}")
+    private String  petName;
+
+    //报错：llegalArgumentException: Could not resolve placeholder 'person.pet' in value "${person.pet}"
+/*    @Value(value = "${person.pet}")
+    private Pet pet;*/
 
     @Test
-    public void showTest(){
-        System.out.println("姓名为--->"+ flag);
+    void testValue(){
+        System.out.println("flag = " + flag);
+        System.out.println("id = " + id);
+        System.out.println("name = " + name);
+        System.out.println("familyOne = " + familyOne);
+        System.out.println("family = " + family);
+        System.out.println("hobbiesOne = " + hobbiesOne);
+        System.out.println("hobbies = " + Arrays.toString(hobbies));
+        System.out.println("level = " + level);
+        System.out.println("petName = " + petName);
+        /*  System.out.println("pet = " + pet);*/
     }
-  
-  
-     @Value(value = "${person.family[0]}")
-    private int familyName;
-
-
-    @Test
-    void valueTest(){
-        System.out.println("family--->" + familyName);
-
-    }
-
   
 
 }
 ```
 
 
+## 两种注解对比分析
+
+![1593089590122](../img/1593089590122.png)
+
+
 
 ### @ConfigurationProperties注解支持JSR303数据校验
-
-```
-person:
-  id: 2
-  name: wukongnotnull
-  family: [baba,mama,gege,jiejie]
-  hobbies: [dance,game,110]
-  map: {level: 3,salary: 3000}
-  pet: {petName: wangcai, petAge: 3}
-```
-
 
 
 application.properties
@@ -309,15 +339,21 @@ public class User {
 test
 
 ```java
+
+@SpringBootTest
+class ApplicationTests {
+
+    @Autowired
+    private User user;
+
     @Test
-    public void validateTest(){
-        System.out.println(user.getEmail());
+    void emailValidation() {
+        System.out.println("user = " + user);
     }
+
+}
 ```
 
 
 
-# 两种注解对比分析
-
-![1593089590122](../img/1593089590122.png)
 
