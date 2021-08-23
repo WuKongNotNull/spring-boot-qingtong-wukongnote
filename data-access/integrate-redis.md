@@ -1,4 +1,6 @@
-# Redis介绍
+# Spring Boot 整合 Redis
+
+## Redis介绍
 
 **什么是Redis**
 
@@ -38,7 +40,7 @@ https://github.com/microsoftarchive/redis/releases/tag/win-3.2.100
 
 <br>
 
-# 使用Spring Boot整合Redis
+## 使用Spring Boot整合Redis
 
 1.在pom文件中添加Spring Data Redis依赖启动器
 

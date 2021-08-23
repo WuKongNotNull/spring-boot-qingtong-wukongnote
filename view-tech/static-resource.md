@@ -1,3 +1,4 @@
+# Spring Boot 访问静态资源
 ## 访问静态资源
 
 由于SpringBoot的项目一般打成jar包，项目结构中没有 webapps 目录。   
@@ -63,7 +64,6 @@ http://localhost:8080/wukong/myjs.js
 
 ![image-20210212221525314](../img/image-20210212221525314.png)
 
-
-
+<br><br><br>
 
 

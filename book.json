@@ -51,7 +51,7 @@
     "github-buttons": {
       "buttons": [{
         "user": "WuKongNotNull",
-        "repo": "spring-boot-quickstart-wukongnote",
+        "repo": "spring-boot-qingtong-wukongnote",
         "type": "star",
         "size": "small"
       }]
@@ -81,14 +81,14 @@
       ]
     },
     "edit-link-plus": {
-      "base":  "https://github.com/WuKongNotNull/spring-boot-quickstart-wukongnote/blob/main/",
+      "base":  "https://github.com/WuKongNotNull/spring-boot-qingtong-wukongnote/blob/main/",
       "label": "编辑本页"
     },
     "chart": {
       "type": "c3"
     },
     "copyright": {
-      "site": "https://wukongnotnull.github.io/spring-boot-quickstart-wukongnote/",
+      "site": "https://wukongnotnull.github.io/spring-boot-qingtong-wukongnote/",
       "author": "悟空非空也",
       "website": "悟空非空也",
       "image": "/asset/weixin/weixin-QR-code.jpg",

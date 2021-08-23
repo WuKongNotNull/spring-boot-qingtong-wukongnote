@@ -5,19 +5,19 @@
 
 - [开发入门](introduction/introduction.md) 
   - [Spring Initialzr 构建项目](introduction/initialzr-build.md) 
-  - [启动图标设置](introduction/modify-banner.md) 
+  - [启动Banner图标设置](introduction/modify-banner.md) 
   - [单元测试](introduction/unit-test.md) 
   - [热部署](introduction/hot-deploy.md) 
   - [依赖管理](introduction/dependency-management.md) 
-  - [自动配置 ](introduction/auto-config.md) 
+  - [自动配置](introduction/auto-config.md) 
   - [执行流程](introduction/execute-flow.md) 
 
 
 - [核心配置与注解](config-annotation/config-annotation.md)
-  - [application 配置文件](config-annotation/application-config.md)
+  - [application 官方配置文件](config-annotation/application-config.md)
   - [属性注入](config-annotation/inject-property.md)
   - [自定义配置文件](config-annotation/custom-config.md)
-  - [profile 文件配置](config-annotation/profile-config.md)
+  - [Profile 文件配置](config-annotation/profile-config.md)
   - [yml 高级玩法](config-annotation/property-reference.md) 
 
   
@@ -32,16 +32,16 @@
   - [默认日志管理](log-management/default-log.md)
 
   
-- [整合 Aop](aop-intergrate/aop-intergrate.md) 
+- [整合 AOP](aop-intergrate/aop-intergrate.md) 
 
 
 - [事务管理](transaction-management/transaction-management.md) 
 
 
-- [支持视图技术](view-tech/view-tech.md)
+- [视图技术](view-tech/view-tech.md)
   - [访问静态资源](view-tech/static-resource.md)
-  - [整合 thymeleaf](view-tech/thymeleaf.md) 
-  - [整合 freemarker](view-tech/freemarker.md) 
+  - [整合 Thymeleaf](view-tech/thymeleaf.md) 
+  - [整合 Freemarker](view-tech/freemarker.md) 
 
   
 -  [实现 Web 开发](web-dev/web-dev.md)

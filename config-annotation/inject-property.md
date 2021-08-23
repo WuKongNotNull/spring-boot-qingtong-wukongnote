@@ -1,4 +1,5 @@
-# 配置文件进行属性注入
+# 属性注入
+
 
 ## @ConfigurationProperties注入属性
 
@@ -192,7 +193,7 @@ class MySpringbootApplicationTests {
 
 
 
-# @Value 注入属性
+##  @Value 注入属性
 
 
 
@@ -278,7 +279,7 @@ class MySpringbootApplicationTests {
 
 
 
-### @ConfigurationProperties注解支持JSR303数据校验
+## @ConfigurationProperties注解支持JSR303数据校验
 
 
 application.properties
@@ -357,3 +358,4 @@ class ApplicationTests {
 
 
 
+<br><br><br>

@@ -1,8 +1,13 @@
-# 实操
+# 热部署
+
+## 介绍
+
+
+## 实操
 
 
 
-## pom文件钟添加spring-boot-devtools热部署依赖
+### pom文件钟添加spring-boot-devtools热部署依赖
 
 
 
@@ -15,7 +20,7 @@
 
 
 
-## idea中热部署设置
+### idea中热部署设置
 
 
 
@@ -37,8 +42,13 @@ ctrl+shift+alt(option)+/   打开界面
 
 
 
-## 热部署测试
+### 热部署测试
 
 
 
 使用浏览器测试，不需要重复启动main方法
+
+
+<br>
+<br>
+<br>

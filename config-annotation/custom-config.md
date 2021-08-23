@@ -1,6 +1,7 @@
-# 使用 @PropertySource 加载自定义配置文件
+# 自定义配置文件
+## 使用 @PropertySource 加载自定义配置文件
 
-## @PropertySource 源码
+### @PropertySource 源码
 ```java
 public @interface PropertySource {
 
@@ -22,7 +23,7 @@ public @interface PropertySource {
 
 ```
 
-## 案例
+### 案例
 
 
 自定义配置文件<br>
@@ -118,9 +119,9 @@ class MySpringbootApplicationTests {
 
 
 
-# 使用@ImportResource加载自定义的 spring xml 配置文件
+## 使用@ImportResource加载自定义的 spring xml 配置文件
 
-## @ImportResource 源码
+### @ImportResource 源码
 ```java
 
 public @interface ImportResource {
@@ -138,7 +139,7 @@ public @interface ImportResource {
 	@AliasFor("value")
 	String[] locations() default {};
 ```
-## 案例
+### 案例
 创建 spring xml 配置文件  
 myBeans.xml
 ```xml
@@ -204,9 +205,9 @@ class InitializrProjectApplicationTests {
 
 
 
-# 使用 @Configuration 编写自定义配置类
+## 使用 @Configuration 编写自定义配置类
 
-## @Configuration 源码
+### @Configuration 源码
 
 ```java
 
@@ -257,7 +258,7 @@ public @interface Configuration {
 
 ```
 
-## 案例
+### 案例
 
 编写配置类
 

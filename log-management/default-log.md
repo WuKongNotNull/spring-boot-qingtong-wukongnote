@@ -1,6 +1,6 @@
+# 默认日志管理
 ## 默认日志框架 logback
-
- java web 下有好几种日志框架，比如：logback，log4j，log4j2（slj4f 并不是一种日志框架，它相当于定义了规范，实现了这个规范的日志框架就能够用 slj4f 调用）。其中性能最高的应该使 logback 了，而且 springboot 默认使用的也是 logback 日志。默认情况下 Spring Boot 将 info 级别的日志输出到控制台中，不会写到日志文件，且不能进行复杂配置。
+java web 下有好几种日志框架，比如：logback，log4j，log4j2（slj4f 并不是一种日志框架，它相当于定义了规范，实现了这个规范的日志框架就能够用 slj4f 调用）。其中性能最高的应该使 logback 了，而且 springboot 默认使用的也是 logback 日志。默认情况下 Spring Boot 将 info 级别的日志输出到控制台中，不会写到日志文件，且不能进行复杂配置。
 
 
 
@@ -28,6 +28,5 @@ logging:
 
 ```
 
+<br><br><br>
 
-
-## 

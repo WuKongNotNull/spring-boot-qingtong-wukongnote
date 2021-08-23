@@ -1,3 +1,4 @@
+# Spring Boot 整合 Freemarker
 ## 集成freemarker视图
 
 
@@ -49,3 +50,4 @@ spring:
 </h1>
 ```
 
+<br><br><br>

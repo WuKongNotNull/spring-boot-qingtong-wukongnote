@@ -1,3 +1,4 @@
+# Spring Boot 整合数据校验
 ## springMVC 数据校验 validation
 
 
@@ -78,3 +79,4 @@ public Object addUser02(@Validated User user){
 
 
 
+<br><br>

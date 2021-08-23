@@ -1,4 +1,5 @@
-# 整合 Spring MVC
+# Spring Boot 整合 MVC 和拦截器
+## 整合 Spring MVC
 
 **pom**
 
@@ -76,7 +77,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
 
 <br>
 
-# 自定义拦截器组件
+## 自定义拦截器组件
 
 > 拦截器实现未登录下，没有访问主页的权限
 

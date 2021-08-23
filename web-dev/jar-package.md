@@ -1,4 +1,4 @@
-## jar包方式打包部署
+# Spring Boot  jar包方式打包部署
 
 **maven打包插件**
 
@@ -42,3 +42,5 @@ java -jar target\myspringboot-mybatis-0.0.1-SNAPSHOT.jar
 **注意**
 
 使用 java 指令，需要配置java的环境变量
+
+<br><br><br>

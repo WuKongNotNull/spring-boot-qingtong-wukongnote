@@ -39,9 +39,9 @@ INSERT INTO `b_comment` VALUES ('5', '赞5', 'baigujing', '2');
 
 <br>
 
-**创建项目,引入mysql和mybatis的依赖启动器**
+**创建项目,引入mysql的依赖启动器**
 
-<img src="../img/image-20200627121225875.png" alt="image-20200627121225875" style="zoom:50%;" />
+<img src="../img/img_1.png" alt="image-20200627121225875" style="zoom:50%;" />
 
  
 
@@ -109,7 +109,7 @@ public class Comment {
 
 **全局配置文件进行数据库连接配置**<br>
 
-application.properties
+application.yml
 
 ```xml
 spring:

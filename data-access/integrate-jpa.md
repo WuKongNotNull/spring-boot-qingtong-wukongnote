@@ -1,4 +1,5 @@
-# Spring Date JPA介绍
+# 整合 JPA
+## Spring Date JPA介绍
 
 Spring Data 是Spring的一个子项目，旨在统一和简化各类型数据的持久化存储方式，而不拘泥于是关系型数据库还是NoSQL数据库。无论是哪种持久化存储方式，数据访问对象（Data Access Objects，DAO）都会提供对对象的增加、删除、修改和查询的方法，以及排序和分页方法等。
 Spring Data 提供了基于这些层面的统一接口（如：CrudRepository、 PagingAndSortingRepository），以实现持久化的存储。
@@ -11,7 +12,7 @@ JPA是一个规范化接口，封装了Hibernate的操作作为默认实现，�
 
 <br>
 
-# 使用Spring Boot整合JPA
+## 使用Spring Boot整合JPA
 
 <br>
 

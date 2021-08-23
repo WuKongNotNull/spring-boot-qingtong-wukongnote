@@ -1,4 +1,4 @@
-## 全局异常处理
+# Spring Boot  全局异常处理
 
 在Spring Boot 提供了对异常的全局性处理，相关注解如下: 
 
@@ -59,3 +59,4 @@ public ResultInfo handleParamsException(ParamsException paramsException){
 }
 ```
 
+<br><br><br>

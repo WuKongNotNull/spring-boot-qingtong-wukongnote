@@ -1,6 +1,7 @@
-### AOP
+# Spring Boot 整合 AOP
+## AOP
 
-​		在SpringBoot中默认是开启AOP功能的
+在SpringBoot中默认是开启AOP功能的
 
 ~~~~yml
 spring:
@@ -10,7 +11,7 @@ spring:
 
 
 
-#### 4.11.1 使用步骤
+## 使用步骤
 
 ①添加依赖
 
@@ -86,13 +87,13 @@ public class UserServiceImpl implements UserServcie {
 
 
 
-#### 4.11.2 切换动态代理
+## 切换动态代理
 
-​	有的时候我们需要修改AOP的代理方式。
+有的时候我们需要修改AOP的代理方式。
 
-​	我们可以使用以下方式修改：
+我们可以使用以下方式修改：
 
-​	在配置文件中配置spring.aop.proxy-target-class为false这为使用jdk动态代理。该配置默认值为true，代表使用cglib动态代理。
+在配置文件中配置spring.aop.proxy-target-class为false这为使用jdk动态代理。该配置默认值为true，代表使用cglib动态代理。
 
 ~~~~java
 @SpringBootApplication
@@ -104,7 +105,7 @@ public class WebApplication {
 }
 ~~~~
 
-​	如果想生效还需要在配置文件中做如下配置
+如果想生效还需要在配置文件中做如下配置
 
 ~~~~yml
 spring:
@@ -114,5 +115,5 @@ spring:
 
 
 
-
+<br><br><br>
 

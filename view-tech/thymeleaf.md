@@ -1,4 +1,5 @@
-# Thymeleaf 介绍
+# Spring Boot 整合 Thymeleaf
+## Thymeleaf 介绍
 
 **Thymeleaf 官网**  
 https://www.thymeleaf.org/index.html
@@ -343,7 +344,7 @@ public class IndexController {
 
 
 
-
+<br><br><br>
 
 
 

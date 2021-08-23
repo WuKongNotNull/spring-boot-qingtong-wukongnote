@@ -1,3 +1,4 @@
+# application 官方配置文件
 ##  application.properties配置文件
 
 **配置端口号**
@@ -27,3 +28,6 @@ server:
 
 <img src="../img/1593077278907.png" alt="1593077278907" style="zoom:50%;" />
 
+
+
+<br><br><br>

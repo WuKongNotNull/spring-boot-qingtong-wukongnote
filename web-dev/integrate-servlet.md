@@ -1,7 +1,6 @@
 # 组件注册方式整合Servlet三大组件
 
 
-
 > 3 大组件分别是 servlet  filter  和 listener 
 
 <br>
@@ -333,5 +332,5 @@ public class MyListener implements ServletContextListener {
 }
 ```
 
-
+<br><br><br>
 
