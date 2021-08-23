@@ -273,7 +273,7 @@ import org.springframework.context.annotation.Configuration;
 public class MyConfig {
 
     @Bean(name = "aPet")
-    public MyService getMyService(){
+    public Pet getPetInstance(){
         return new Pet();
     }
 }
