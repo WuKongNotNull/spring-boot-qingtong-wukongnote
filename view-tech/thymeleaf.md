@@ -52,7 +52,7 @@ https://www.thymeleaf.org/documentation.html
 
 <br>
 
-# 整合 Thymeleaf
+## 整合 Thymeleaf
 
 <br>
 
@@ -83,9 +83,11 @@ https://www.thymeleaf.org/documentation.html
 
 <br>
 
-**配置thymeleaf模板缓存application.yml**
 
-<br>
+
+**application.yml 中配置 Thymeleaf 模板缓存 **
+
+> 开发测试时，请关闭缓存。
 
 ```yaml
 
@@ -94,7 +96,7 @@ spring:
     mode: HTML
     prefix: classpath:/templates/
     suffix: .html
-    cache: false
+    cache: false  # 关闭缓存
     encoding: UTF-8
 
     
@@ -103,19 +105,17 @@ spring:
 <br>
 
 
-#  使用 Thymeleaf 完成数据的页面展示
+##  使用 Thymeleaf 完成数据的页面展示
 
 ```yaml
-#模板缓存改成false，上线后改成true
-spring:
-    cache: false
+
 ```
 
 <br>
 
 
 
-# 使用Thymeleaf配置国际化页面
+## 使用Thymeleaf配置国际化页面
 
 
 
@@ -149,7 +149,7 @@ spring:
 <body class="text-center">
 
 <form class="form-signin">
-    <img class="mb-4" th:src="@{/login/img/login.jpg}" width="72" height="72">
+    <img class="mb-4" th:src="@{/login/img/login.png}" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal" th:text="#{login.tip}">请登录</h1>
     <input type="text" class="form-control"
            th:placeholder="#{login.username}" required="" autofocus="">
@@ -317,29 +317,23 @@ public class IndexController {
 
 
 
-**启动后浏览器测试**
+**启动后，浏览器发送请求，进行测试**
 
 
 
 
 
-# 中文乱码解决
+## 中文乱码解决
 
-![image-20200627193632870](../img/image-20200627193632870.png)
-
-**原因**
-
-<img src="../img/image-20200627193818844.png" alt="image-20200627193818844" style="zoom:50%;" />
-
-**解决方案**
-
-最佳方案
-
-在创建新项目前，将idea进行字符编码设置，这样保证项目和配置文件中的所有中文打字都是使用utf-8编码
+> application 文件中出现中文乱码，请如下设置
+>
+> 在创建新项目前，将idea进行字符编码设置，这样保证项目和配置文件中的所有中文打字都是使用utf-8编码
 
 
 
-![image-20200627194006830.png](../img/image-20200627194006830.png)
+
+
+<img src="../img/image-20200627194006830.png" alt="image-20200627194006830.png" style="zoom: 25%;" />
 
 
 

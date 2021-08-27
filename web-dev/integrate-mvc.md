@@ -1,7 +1,7 @@
 # Spring Boot 整合 MVC 和拦截器
-## 整合 Spring MVC
+## Spring Boot 整合 Spring MVC
 
-**pom**
+### **pom 依赖**
 
 ```xml
         <!-- thymeleaf -->
@@ -22,7 +22,9 @@
 
 <br>
 
-**编写自定义配置类并实现WebMvcConfigurer**
+## **自定义配置类**
+
+> 编写自定义配置类并实现WebMvcConfigurer
 
 ````java
 package com.wukongnotnull.config;
@@ -39,7 +41,6 @@ public class MyMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-                registry.addViewController("/toLoginPage").setViewName("login");
                 registry.addViewController("/login.html").setViewName("login");
 
     }
@@ -54,7 +55,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
 
 
 
-**login 页面展示**
+### **login 页面展示**
 
 ```html
 <!DOCTYPE html>
@@ -77,9 +78,13 @@ public class MyMvcConfig implements WebMvcConfigurer {
 
 <br>
 
+## Spring Boot 整合拦截器
+
 ## 自定义拦截器组件
 
-> 拦截器实现未登录下，没有访问主页的权限
+> 准备主页（home.html）和 登录页（login.html）
+>
+> 拦截器实现未登录状态下，不能访问主页（home页面文件）
 
 ```java
 package com.wukongnotnull.interceptor;
@@ -98,6 +103,7 @@ public class MyInterceptor  implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, 
                              HttpServletResponse response, 
                              Object handler) throws Exception {
+        // 拦截下来的请求，什么请求被阻止，什么请求被放行 
         Object username = request.getSession().getAttribute("userSession");
         if (username == null) {
             response.sendRedirect(request.getContextPath()+"/login");
@@ -134,7 +140,8 @@ public class MyMvcConfig  implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
       registry.addViewController("/login").setViewName("login");
-      registry.addViewController("/toLoginPage").setViewName("login");
+       registry.addViewController("/home").setViewName("home");
+  
     }
 
     @Autowired
@@ -142,10 +149,10 @@ public class MyMvcConfig  implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+      	// 指定拦截哪些请求
         // 拦截所有请求，除了 /login 和 /doLogin
        registry.addInterceptor(myInterceptor).addPathPatterns("/**")
-         .excludePathPatterns("/login")
-         .excludePathPatterns("/doLogin");
+         .excludePathPatterns("/login");
     }
 }
 

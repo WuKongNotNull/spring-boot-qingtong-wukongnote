@@ -9,11 +9,11 @@ spring:
     auto: true
 ~~~~
 
-
+<br>
 
 ## 使用步骤
 
-①添加依赖
+### 添加依赖
 
 ~~~~xml
         <dependency>
@@ -22,7 +22,9 @@ spring:
         </dependency>
 ~~~~
 
-②自定义注解
+<br>
+
+### 自定义注解
 
 ~~~~java
 @Target(ElementType.METHOD)
@@ -32,33 +34,39 @@ public @interface InvokeLog {
 
 ~~~~
 
-③定义切面类
+<br>
+
+### 定义切面类
 
 ~~~~java
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Aspect  //标识这是一个切面类
 @Component
 public class InvokeLogAspect {
+  
+  	public static final Logger logger = LoggerFactory.getLogger(InvokeLogAspect.class);
 
-    //确定切点
-    @Pointcut("@annotation(com.sangeng.aop.InvokeLog)")
-    public void pt(){
+    //指定哪些连接点为切点
+    @Pointcut("@annotation(com.wukongnotnull.aop.InvokeLog)")
+    public void pc(){
     }
-
-    @Around("pt()")
+		
+  	// 在切点出添加什么增强，增强方式是什么？
+    @Around("cp()")
     public Object printInvokeLog(ProceedingJoinPoint joinPoint){
-        //目标方法调用前
+         //目标方法调用前
         Object proceed = null;
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         String methodName = signature.getMethod().getName();
-        System.out.println(methodName+"即将被调用");
+       logger.info("enter this method--->"+methodName);
         try {
             proceed = joinPoint.proceed();
             //目标方法调用后
-            System.out.println(methodName+"被调用完了");
+            logger.info("leave this method--->"+methodName);
         } catch (Throwable throwable) {
             throwable.printStackTrace();
-            //目标方法出现异常了
-            System.out.println(methodName+"出现了异常");
         }
         return proceed;
     }
@@ -66,7 +74,9 @@ public class InvokeLogAspect {
 
 ~~~~
 
-④在需要正确的地方增加对应的注解
+<br>
+
+### 增加自定义注解
 
 ~~~~Java
 @Service
@@ -76,12 +86,23 @@ public class UserServiceImpl implements UserServcie {
     private UserMapper userMapper;
 
     @Override
-    @InvokeLog  //需要被增强方法需要加上对应的注解
+    @InvokeLog  //添加自定义注解
     public List<User> findAll() {
         return userMapper.findAll();
     }
 }
 ~~~~
+
+<br>
+
+### 单元测试
+
+```java
+    @Test
+    void findAll() {
+        userService.findAll();
+    }
+```
 
 
 

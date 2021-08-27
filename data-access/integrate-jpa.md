@@ -1,5 +1,5 @@
 # 整合 JPA
-## Spring Date JPA介绍
+## Spring Date JPA 介绍
 
 Spring Data 是Spring的一个子项目，旨在统一和简化各类型数据的持久化存储方式，而不拘泥于是关系型数据库还是NoSQL数据库。无论是哪种持久化存储方式，数据访问对象（Data Access Objects，DAO）都会提供对对象的增加、删除、修改和查询的方法，以及排序和分页方法等。
 Spring Data 提供了基于这些层面的统一接口（如：CrudRepository、 PagingAndSortingRepository），以实现持久化的存储。
@@ -12,22 +12,42 @@ JPA是一个规范化接口，封装了Hibernate的操作作为默认实现，�
 
 <br>
 
-## 使用Spring Boot整合JPA
 
-<br>
 
-**pom**
+## Spring Boot 整合 JPA
+
+### **pom 依赖**
 
 ```xml
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
+	  <dependency>
+       <groupId>mysql</groupId>
+       <artifactId>mysql-connector-java</artifactId>
+       <scope>runtime</scope>
+     </dependency>
 ```
 
 <br>
 
-**实体类和表进行映射**
+### **配置文件**
+
+```yaml
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/wukong_blog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&autoReconnect=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: rootroot
+```
+
+
+
+<br>
+
+### **实体类与表的映射**
 
 ```java
 package com.wukongnotnull.domain;/* 
@@ -52,10 +72,10 @@ public class Comment {
 
     @Column(name = "content" )
     private String content;
+  
     @Column(name = "author")
     private String author;
-    //此属性名和表中的字段article_id不一致，不能自动映射，需要在application.yml中进行配置
-    //mybatis.configuration.map-underscore-to-camel-case=true
+  
     @Column(name = "article_id")
     private Integer articleId;
 
@@ -66,9 +86,9 @@ public class Comment {
 
 <br>
 
-**自定义dao层的操作数据库的接口**
+### **自定义接口**
 
->  默认继承父接口，父接口提供了简单的增删改查方法，但是还不能满足业务需求，那就需要自定义方法吧
+>  默认继承父接口，父接口提供了简单的增删改查方法，还不能满足业务需求，那就需要自定义方法
 
 ```java
 package com.wukongnotnull.repository;
@@ -83,7 +103,8 @@ import org.springframework.data.jpa.repository.Query;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-
+// 记得添加该注解 @Repository
+@Repository
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
     @Override
@@ -102,10 +123,12 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
     @Override
     <S extends Comment> S saveAndFlush(S s);
 
-    @Query("select c from b_comment c where c.articleId=?1")
+  	// 不能使用 * 通配符
+    @Query("select c from b_comment c where c.articleId=?1",nativeQuery = false)
     List<Comment> getCommentList(Integer articleId);
 
-    @Query(value = "select * from b_comment c where c.article_id=?1",nativeQuery = true)
+  	// 若使用通配符 * 
+    @Query(value = "select * from b_comment c where c.articleId=?1",nativeQuery = true)
     List<Comment> getCommentList2(Integer articleId);
 
     @Transactional
@@ -127,7 +150,7 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
 <br>
 
-**测试一下吧**
+### **单元测试**
 
 ```java
 package com.wukongnotnull.repository;
@@ -150,10 +173,15 @@ class CommentRepositoryTest {
     void findAll() {
         System.out.println(commentRepository.findAll());
     }
+  
+      @Test
+    void findById(){
+        Optional<Comment> optionalComment = commentRepository.findById(1);
+        if (optionalComment.isPresent()) {
+            Comment comment1 = optionalComment.get();
+            System.out.println(comment1);
+        }
 
-    @Test
-    void findById() {
-        System.out.println(commentRepository.findById(1));
     }
 
     @Test
