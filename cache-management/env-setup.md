@@ -1,8 +1,11 @@
-## 基础环境搭建
+<extoc></extoc>
+
+
+# 基础环境搭建
 
 
 
-**创建项目**
+## **创建项目**
 
 ![image-20200630201135910](../img/image-20200630201135910-5969368.png)
 
@@ -10,7 +13,7 @@
 
 <br>
 
-**pom.xml**
+## **pom.xml**
 
 ```xml
 <dependency>
@@ -47,7 +50,7 @@
 
 <br>
 
-**配置文件配置**
+## **配置文件配置**
 
 ```properties
 #mysql数据库连接配置
@@ -65,7 +68,7 @@ spring:
 
 
 
-**实体类**
+## **实体类**
 
 ```java
 import lombok.AllArgsConstructor;
@@ -97,7 +100,7 @@ public class Comment {
 
 <br>
 
-**编写自定义仓库类，继承JpaRepository**
+## **编写自定义仓库类，继承JpaRepository**
 
 ```java
 package com.wukongnotnull.repository;
@@ -156,7 +159,7 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
 <br>
 
-**service层**
+## **service层**
 
 ```java
 package com.wukongnotnull.service;
@@ -225,7 +228,7 @@ public class CommentServiceImpl implements  CommentService {
 
 <br>
 
-**controller层**
+## **controller层**
 
 ```java
 package com.wukongnotnull.controller;

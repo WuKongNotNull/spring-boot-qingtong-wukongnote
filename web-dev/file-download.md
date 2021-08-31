@@ -1,6 +1,6 @@
 # Spring Boot 文件下载
 
-**pom.xml**
+## **pom.xml**
 
 ```xml
         <dependency>
@@ -14,7 +14,7 @@
 
 <br>
 
-**controller**
+## **controller**
 
 ```java
 package com.wukongnotnull.controller;
@@ -43,7 +43,8 @@ public class FileController {
     }
 
     @RequestMapping("/downloadFile")
-    public ResponseEntity<byte[]> getdownloadFile(String filename, HttpServletRequest request)  {
+    public ResponseEntity<byte[]> getdownloadFile(String filename, 
+                                                  HttpServletRequest request)  {
         String dirPath= "/Users/mac/Desktop/download/";
         File file = new File(dirPath, filename);
 
@@ -58,10 +59,12 @@ public class FileController {
         ResponseEntity<byte[]> responseEntity =null;
 
         try {
-            responseEntity = new ResponseEntity<>(FileUtils.readFileToByteArray(file), httpHeaders, HttpStatus.OK);
+            responseEntity = 
+              new ResponseEntity<>(FileUtils.readFileToByteArray(file), httpHeaders, HttpStatus.OK);
 
         } catch (IOException e) {
-            responseEntity = new ResponseEntity<>(e.getMessage().getBytes(), HttpStatus.EXPECTATION_FAILED);
+            responseEntity = 
+              new ResponseEntity<>(e.getMessage().getBytes(), HttpStatus.EXPECTATION_FAILED);
             e.printStackTrace();
         }
         return  responseEntity;
@@ -94,7 +97,7 @@ public class FileController {
 
 <br>
 
-**html**
+## **html**
 
 ```html
 <!DOCTYPE html>

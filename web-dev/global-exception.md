@@ -12,7 +12,31 @@
 
 
 
- 以 Restful 接口为例,测试保存用户接口
+## 案例
+> 程序出现异常，如何被统一处理 ？
+
+
+### 返回响应信息封装类
+```java
+package com.wukongnotnull.vo;
+
+import lombok.Data;
+
+//author: 悟空非空也（B站/知乎/公众号）
+// 响应信息的封装类
+@Data
+public class ResultInfo {
+
+    private Integer  code;
+    public String msg;
+    private Object data;
+    
+}
+```
+
+<br>
+
+### 自定义全局异常处理器
 
 ```java
 package com.wukongnotnull.exception;
@@ -30,32 +54,37 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = {Exception.class})
     @ResponseBody
     public ResultInfo handleException(Exception e){
-
         ResultInfo resultInfo = new ResultInfo();
-        resultInfo.setCode(300);
+        resultInfo.setCode(520);
         resultInfo.setMsg("系统异常");
-
-        if(e instanceof ParamsException){
-            ParamsException paramsException = (ParamsException) e;
-            resultInfo.setCode(paramsException.getCode());
-            resultInfo.setMsg(paramsException.getMsg());
-        }
+      	resultInfo.setData(e);
         return  resultInfo;
     }
 
 }
 ```
 
-**或者**
+<br>
+
+### Controller
 
 ```java
-@ExceptionHandler(value = {ParamsException.class})
-@ResponseBody
-public ResultInfo handleParamsException(ParamsException paramsException){
-    ResultInfo resultInfo = new ResultInfo();
-    resultInfo.setCode(paramsException.getCode());
-    resultInfo.setMsg(paramsException.getMsg());
-    return  resultInfo;
+@Controller
+public class UserController {
+    
+    @PostMapping(value = "/ge")
+    @ResponseBody
+    public Object testGlobalException() {
+     ResultInfo resultInfo = new ResultInfo();
+     // 制造异常
+     int i = 1 / 0;
+     resultInfo.setCode(521);
+     resultInfo.setMsg("test 成功");
+     resultInfo.setData(null);
+      
+     return resultInfo;
+    }
+    
 }
 ```
 

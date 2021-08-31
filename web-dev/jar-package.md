@@ -1,6 +1,6 @@
-# Spring Boot  jar包方式打包部署
+# Spring Boot jar包方式打包部署
 
-**maven打包插件**
+## **maven打包插件**
 
 ```xml
     <build>
@@ -15,15 +15,23 @@
 
 <br>
 
-**点击package**
+## **打包**
 
-<img src="../img/image-20200629185518599.png" alt="image-20200629185518599" style="zoom:50%;" />
+> 步骤 ： +    --->    command line: package 
+
+![image-20210831151820294](https://tva1.sinaimg.cn/large/008i3skNgy1gu007gduy7j61ok0u043002.jpg)
+
+
+
+
+
+
 
 <br>
 
 
 
-**保存路径**
+## **找到保存路径**
 
 <img src="../img/image-20200629185556075.png" alt="image-20200629185556075" style="zoom:50%;" />
 
@@ -31,16 +39,21 @@
 
 
 
-**部署后就可以访问**
+## **运行jar包后直接访问**
 
-java -jar target\myspringboot-mybatis-0.0.1-SNAPSHOT.jar
+
+
+`java -jar target\myspringboot-mybatis-0.0.1-SNAPSHOT.jar`
 
 
 
 <br>
 
-**注意**
+> **注意**
+> 使用 java 指令，需要配置java的环境变量
 
-使用 java 指令，需要配置java的环境变量
+
+
+
 
 <br><br><br>

@@ -91,7 +91,7 @@
       "site": "https://wukongnotnull.github.io/spring-boot-qingtong-wukongnote/",
       "author": "悟空非空也",
       "website": "悟空非空也",
-      "image": "/asset/weixin/weixin-QR-code.jpg",
+      "image": "https://tva1.sinaimg.cn/large/008i3skNgy1gu0dga76xrj61bi0hcgnn02.jpg",
       "copyProtect": false
 
     },
@@ -101,8 +101,8 @@
       "modify_format": "YYYY-MM-DD HH:mm:ss"
     },
     "donate": {
-      "wechat": "/asset/pay/wechat-pay.png",
-      "alipay": "/asset/pay/ali-pay.png",
+      "wechat": "https://tva1.sinaimg.cn/large/008i3skNgy1gu0dhhyn9qj60yi0spq5402.jpg",
+      "alipay": "https://tva1.sinaimg.cn/large/008i3skNgy1gu0dh56y7dj60p00kkmyt02.jpg",
       "title": "",
       "button": "赞 👍 赏",
       "alipayText": "支付宝",
@@ -127,7 +127,7 @@
       "multipleH1": false
     },
     "insert-logo-link-website": {
-      "url": "/asset/wukong-favicon.ico",
+      "url": "https://tva1.sinaimg.cn/large/008i3skNgy1gu0djyg2dwj608w085weu02.jpg",
       "link": "/index.html",
       "target": "_self",
       "style": "height: 100px"

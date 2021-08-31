@@ -1,10 +1,12 @@
-### 自定义参数解析
+<extoc></extoc>
 
-​	如果我们想实现像获取请求体中的数据那样，在Handler方法的参数上增加一个@RepuestBody注解就可以获取到对应的数据的话。
+# 自定义参数解析
 
-​	可以使用HandlerMethodArgumentResolver来实现自定义的参数解析。
-
-①定义用来标识的注解
+如果我们想实现像获取请求体中的数据那样，在Handler方法的参数上增加一个@RepuestBody注解就可以获取到对应的数据的话。
+可以使用HandlerMethodArgumentResolver来实现自定义的参数解析。
+## 案例 
+> 实现当前用户token 值和形参的绑定
+### 定义用来标识的注解
 
 ~~~~java
 @Target(ElementType.PARAMETER)
@@ -14,7 +16,7 @@ public @interface CurrentUserId {
 }
 ~~~~
 
-②创建类实现HandlerMethodArgumentResolver接口并重写其中的方法
+### 创建类实现HandlerMethodArgumentResolver接口并重写其中的方法
 
 **注意加上@Component注解注入Spring容器**
 
@@ -44,7 +46,7 @@ public class UserIdArgumentResolver implements HandlerMethodArgumentResolver {
 }
 ~~~~
 
-③配置参数解析器
+### 配置参数解析器
 
 ~~~~java
 @Configuration
@@ -62,7 +64,7 @@ public class ArgumentResolverConfig implements WebMvcConfigurer {
 
 
 
-④测试
+### 测试
 
 在需要获取UserId的方法中增加对应的方法参数然后使用@CurrentUserId进行标识即可获取到数据
 

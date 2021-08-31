@@ -1,4 +1,6 @@
-## Token
+<extoc></extoc>
+
+# Token
 
 在前后端分离的场景中，采用 `Token` 方案进行登录验证。登录成功时，后端根据用户信息生成一个 `Token` 字符串返回给前端（客户端）存储。
 
@@ -12,7 +14,7 @@
 
 目前企业中运用比较多的，是使用 `JWT` 技术来生成 `token` 。
 
-**引入依赖**
+### **引入依赖**
 
 ~~~~xml
         <dependency>
@@ -24,7 +26,7 @@
 
 
 
-**设计工具类来生成和解析token**
+### **设计工具类来生成和解析token**
 
 ~~~~java
 import io.jsonwebtoken.Claims;

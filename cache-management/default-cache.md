@@ -1,10 +1,12 @@
-## Spring Boot默认缓存体验
+<extoc></extoc>
+
+# Spring Boot默认缓存体验
 
 **spring boot 自带缓存机制，可以使用默认缓存，避免每次查询都去数据库访问一边，避免资源消耗**
 
 <br>
 
-**在启动类上添加注解 @EnableCaching**
+## **在启动类上添加注解 @EnableCaching**
 
 ```java
 package com.wukongnotnull;
@@ -27,7 +29,7 @@ public class RedisSpringbootApplication {
 
 <br>
 
-**在service层的实现类的方法上添加注解 @Cacheable，开启缓存空间**
+## **在service层的实现类的方法上添加注解 @Cacheable，开启缓存空间**
 
 ```java
 package com.wukongnotnull.service;
@@ -77,7 +79,7 @@ public class CommentServiceImpl implements  CommentService {
 
 <br>
 
-**测试，多次查询，在控制台只打印第一次查询日志**
+## **测试，多次查询，在控制台只打印第一次查询日志**
 
 
 

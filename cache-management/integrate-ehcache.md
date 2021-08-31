@@ -1,4 +1,5 @@
-## 集成 ehcache缓存框架
+<extoc></extoc>
+# 集成 ehcache缓存框架
 
 EhCache 是一个纯Java的进程内缓存框架，具有快速、精干等特点，是Hibernate中默认CacheProvider。Ehcache是一种广泛使用的开源Java分布式缓存。主要面向通用缓存,Java EE和轻量级容器。它具有内存和磁盘存储，缓存加载器,缓存扩展,缓存异常处理程序,一个gzip缓存servlet过滤器,支持REST和SOAP api等特点。
 
@@ -6,7 +7,7 @@ Spring 提供了对缓存功能的抽象：即允许绑定不同的缓存解决�
 
 
 
-**ehcache 和 redis 比较**
+## **ehcache 和 redis 比较**
 
 　　ehcache直接在jvm虚拟机中缓存，速度快，效率高；但是缓存共享麻烦，集群分布式应用不方便。
 
@@ -14,9 +15,9 @@ Spring 提供了对缓存功能的抽象：即允许绑定不同的缓存解决�
 
 　　ehcache也有缓存共享方案，不过是通过RMI或者Jgroup多播方式进行广播缓存通知更新，缓存共享复杂，维护不方便；简单的共享可以，但是涉及到缓存恢复，大数据缓存，则不合适。
 
+## 实操
 
-
-**pom**
+### **pom**
 
 ```xml
 <dependency>
@@ -32,7 +33,7 @@ Spring 提供了对缓存功能的抽象：即允许绑定不同的缓存解决�
 
 
 
-**src/main/resources/ehcache.xml**
+### **src/main/resources/ehcache.xml**
 
 ```xml
 <ehcache name="mycache">
@@ -92,7 +93,7 @@ Spring 提供了对缓存功能的抽象：即允许绑定不同的缓存解决�
 
 
 
-**application.xml**
+### **application.xml**
 
 ```yaml
 # 缓存的配置
@@ -110,7 +111,7 @@ logging:
 
 
 
-**实体类序列化**
+### **实体类序列化**
 
 ```java
 public class User implements Serializable {
@@ -119,7 +120,7 @@ public class User implements Serializable {
 
 
 
-**启动类**
+### **启动类**
 
 ```java
 @SpringBootApplication
@@ -137,7 +138,7 @@ public class App
 
 
 
-**service层设置缓存**
+### **service层设置缓存**
 
 ```java
 @Service

@@ -1,19 +1,22 @@
-#### 拦截器
+<extoc></extoc>
+
+# Token 登录
+## 拦截器
 
 ​		如果我们想在多个Handler方法执行之前或者之后都进行一些处理，甚至某些情况下需要拦截掉，不让Handler方法执行。那么可以使用SpringMVC为我们提供的拦截器。
 
 
 
-#### 4.6.1 使用步骤
+##  使用步骤
 
-##### ①创建类实现HandlerInterceptor接口
+### 创建类实现HandlerInterceptor接口
 
 ~~~~java
 public class LoginInterceptor implements HandlerInterceptor {
 }
 ~~~~
 
-##### ②实现方法
+### 实现方法
 
 ~~~~java
 @Component
@@ -45,7 +48,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 }
 ~~~~
 
-##### ③配置拦截器
+### 配置拦截器
 
 
 ~~~~java

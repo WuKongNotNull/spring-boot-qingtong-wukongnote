@@ -1,11 +1,13 @@
-# 组件注册方式整合Servlet三大组件
+# 整合 Servlet Filter Listener
+
+## 组件注册方式整合Servlet三大组件
 
 
 > 3 大组件分别是 servlet  filter  和 listener 
 
 <br>
 
-## **整合 servlet 组件**
+### **整合 servlet 组件**
 
 > servlet  负责和浏览器进行交互 ，接受请求，找到相对应的响应信息，返回给客户端（浏览器）
 
@@ -83,7 +85,7 @@ public class ServletConfig {
 
 <br>
 
-## **filter**
+### **整合 filter**
 
 
 
@@ -155,7 +157,7 @@ public class FilterConfig {
 
 <br>
 
-## **listener**
+### **整合 listener**
 
 
 
@@ -214,7 +216,7 @@ public class ListenerConfig {
 
 
 
-# 路径扫描方式整合Servlet三大组件
+## 路径扫描方式整合Servlet三大组件
 
 **启动类**
 
@@ -234,7 +236,7 @@ public class WebappThymeleafApplication {
 
 <br>
 
-**myServlet**
+### **myServlet**
 
 >  添加注解   @WebServlet(value = {"/myServlet"})
 
@@ -270,11 +272,11 @@ public class MyServlet extends HttpServlet {
 
 <br>
 
-**myFilter**
+### **myFilter**
 
 > 添加注解 @WebFilter(value = {"/myServlet"})
 
-```
+```java
 package com.wukongnotnull.servlet;
 /* author: 悟空非空也（B站/知乎/公众号） */
 
@@ -301,11 +303,12 @@ public class MyFilter implements Filter {
 
     }
 }
+
 ```
 
 
 
-**myListener.java**
+### **myListener.java**
 
 > 添加注解 @WebListener
 

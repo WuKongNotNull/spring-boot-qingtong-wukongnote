@@ -1,6 +1,6 @@
 # Spring Boot  多文件上传
 
-**controller**
+## **controller**
 
 ```java
 package com.wukongnotnull.controller;
@@ -31,7 +31,7 @@ public class FileController {
             @RequestParam("fileUpload") MultipartFile[] uploadFiles,
             Model model,
             HttpServletRequest request){
-        model.addAttribute("uploadStatus","文件上传成功");
+     
         for (MultipartFile file : uploadFiles) {
             String originalFilename = file.getOriginalFilename();// 获得文件名及后缀，例如  wukong.jpg
             //重新命名
@@ -49,6 +49,7 @@ public class FileController {
             //创建新文件，接受传递过来的文件流
             try {
                 file.transferTo(new File(newPath,newFilename));
+                 model.addAttribute("uploadStatus","文件上传成功");
             } catch (IOException e) {
                 e.printStackTrace();
                 model.addAttribute("uploadStatus","上传失败");
@@ -65,7 +66,7 @@ public class FileController {
 
 
 
-**upload.html**
+## **upload.html**
 
 ```html
 <!DOCTYPE html>
